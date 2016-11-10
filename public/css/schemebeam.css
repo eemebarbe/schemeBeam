@@ -1,0 +1,25 @@
+.tile {
+	height: 500px;
+	width: 100%;
+	background-color: orange;
+}
+
+.headerBox {
+	width: 200px;
+	margin: auto;
+	padding-top: 200px;
+	text-align: center;
+}
+
+.headerTitle {
+	font-size: 32px;
+}
+
+.inputText {
+	height: 30px;
+	padding: 0;
+}
+
+.inputButton {
+	height: 30px;
+}
