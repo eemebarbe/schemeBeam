@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function(app, connection) {
 
     app.post('/api/v1/newemail', function(req, res) {
         // regex on both client and server side for protection in case JS is augmented
@@ -6,7 +6,7 @@ module.exports = function(app) {
         if (!re.test(req.body.email)) {
             res.json('Email address is not valid!');
         } else {
-            connection.query('INSERT INTO emails (email) VALUES (?)', [req.body.email], function(err, rows, fields) {
+            connection.query('INSERT INTO emails (emailaddress) VALUES (?)', [req.body.email], function(err, rows, fields) {
                 if (err) {
                     res.status(401);
                 }

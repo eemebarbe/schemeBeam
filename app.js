@@ -5,14 +5,6 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var router = express.Router();
 
-//route configuration
-app.use('/api', router);
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
-
 //database configuration
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -24,8 +16,16 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+//route configuration
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 //internal app dependencies
-var api = require('./api/api.js')(app);
+var api = require('./api/api.js')(app, connection);
+var routes = require('./routes/routes.js')(app, connection);
 
 //server initiation
 var port = 80;
