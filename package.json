@@ -9,11 +9,13 @@
   "author": "Jeremy Barbe",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.15.2",
     "body-parser": "^1.15.2",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "fs": "0.0.1-security",
     "history": "^4.4.0",
+    "mysql": "^2.12.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^3.0.0"

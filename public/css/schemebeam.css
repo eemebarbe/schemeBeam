@@ -18,8 +18,10 @@
 .inputText {
 	height: 30px;
 	padding: 0;
+	border: none;
 }
 
 .inputButton {
 	height: 30px;
+	border: none;
 }
