@@ -5,6 +5,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var router = express.Router();
 
+
 //database configuration
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -15,6 +16,31 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
+
+var env = require("./env.js");
+
+
+var helper = require('sendgrid').mail;
+var from = new helper.Email("eeme.barbe@gmail.com");
+var to = new helper.Email("eeme.barbe@gmail.com");
+var subject = "subject here";
+var content = new helper.Content("text/plain", "some text here");
+var mail = new helper.Mail(from, subject, to, content);
+
+var sg = require('sendgrid')(SENDGRID_API_KEY);
+
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON(),
+});
+
+sg.API(request, function(error, response) {
+  // Handle the response here.
+  console.log(response.statusCode);
+  console.log(response.body);
+  console.log(response.headers);
+});
 
 //route configuration
 app.use(express.static(__dirname + '/public'));
@@ -33,9 +59,4 @@ app.listen(port, function() {
     console.log('schemeBeam up and running on port ' + port);
 });
 
-
-// Handle / root route.
-app.get('/', function(req, res) {
-	res.sendfile('./public/views/index.html');
-});
 
