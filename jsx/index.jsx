@@ -26,18 +26,18 @@ class SubmitEmail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hashCode : this.props.routeParams.hashCode
+            hashCode : this.props.routeParams.hashCode,
+            realHash : false
         };
     }
 
     componentWillMount() {
         axios.get('api/v1/checkhash/' + this.state.hashCode)
-        .then(function(response){
-            console.log(response);
+        .then((response) =>{
             if(response.data === 200) {
-                console.log("works");
-            } else {
-                console.log("nope");
+                this.setState({
+                    realHash : true
+                });
             }
         });
     }
@@ -45,6 +45,7 @@ class SubmitEmail extends React.Component {
     postEmail() {
         const emailData = {
             email: ReactDOM.findDOMNode(this.refs.emailInput).value,
+            hashCode: this.state.hashCode
         };
         axios.post('api/v1/newemail', emailData)
         .then(function(response){
@@ -53,14 +54,26 @@ class SubmitEmail extends React.Component {
     }
 
     render() {
+            if(this.state.realHash === true || this.state.hashCode === undefined){
+                var checkHash = (
+                    <div>
+                        <div className="headerTitle">schemeBeam</div>
+                        <form>
+                            <input ref="emailInput" className="inputText" type="text" />
+                            <Link to='thanks'><button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button></Link>
+                        </form>
+                    </div>
+                );
+            } else {
+                var checkHash = (
+                    <div>Not a valid referral link!</div>
+                );
+            }
+
     	return(
-			<div className="headerBox">
-    			<div className="headerTitle">schemeBeam</div>
-				<form>
-					<input ref="emailInput" className="inputText" type="text" />
-					<Link to='thanks'><button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button></Link>
-				</form>
-			</div>
+            <div className="headerBox">
+                {checkHash}
+            </div>
     	)
     }
 }

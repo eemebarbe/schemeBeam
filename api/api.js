@@ -15,6 +15,13 @@ module.exports = function(app, connection) {
             connection.query('INSERT INTO emails (emailaddress, referralcode) VALUES (?, ?)', [req.body.email, hashCode], function(err, rows, fields) {
                 if (err) {
                     res.status(401);
+                } else {
+                    console.log(req.body.hashCode);
+                    connection.query('UPDATE emails SET referrals = referrals + 1 WHERE `referralcode`=(?)', [req.body.hashCode], function(err, rows, fields) {
+                        if (err) {
+                            res.status(401);
+                        }
+                    });
                 }
             });
         }
