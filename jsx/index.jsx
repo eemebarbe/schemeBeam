@@ -26,7 +26,20 @@ class SubmitEmail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            hashCode : this.props.routeParams.hashCode
         };
+    }
+
+    componentWillMount() {
+        axios.get('api/v1/checkhash/' + this.state.hashCode)
+        .then(function(response){
+            console.log(response);
+            if(response.data === 200) {
+                console.log("works");
+            } else {
+                console.log("nope");
+            }
+        });
     }
 
     postEmail() {
@@ -63,10 +76,12 @@ class Thanks extends React.Component {
     	return(
 			<div className="headerBox">
 				<div className="headerTitle">Thanks!</div>
+                <div>Check your email for your referral link!</div>
 			</div>
     	)
     }
 }
+
 
 class FrontPage extends React.Component {
     render() {
@@ -82,6 +97,7 @@ ReactDOM.render(
 		<Route path='/' component={Lander}>
 			<IndexRoute component={SubmitEmail}></IndexRoute>
 			<Route path='thanks' component={Thanks}></Route>
+            <Route path=':hashCode' component={SubmitEmail}></Route>
 		</Route>
 	</Router>,
 document.getElementById('content'));

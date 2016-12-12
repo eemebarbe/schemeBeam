@@ -24,7 +24,7 @@ var helper = require('sendgrid').mail;
 var from = new helper.Email("eeme.barbe@gmail.com");
 var to = new helper.Email("eeme.barbe@gmail.com");
 var subject = "subject here";
-var content = new helper.Content("text/plain", "some text here");
+var content = new helper.Content("text/html", "<h1>Your referral link:</h1> <h2>second header</h2>");
 var mail = new helper.Mail(from, subject, to, content);
 
 var sg = require('sendgrid')(SENDGRID_API_KEY);
@@ -35,12 +35,14 @@ var request = sg.emptyRequest({
   body: mail.toJSON(),
 });
 
+function sendMessage() {
 sg.API(request, function(error, response) {
   // Handle the response here.
   console.log(response.statusCode);
   console.log(response.body);
   console.log(response.headers);
 });
+}
 
 //route configuration
 app.use(express.static(__dirname + '/public'));
