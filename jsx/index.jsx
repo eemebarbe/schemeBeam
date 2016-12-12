@@ -33,7 +33,7 @@ class SubmitEmail extends React.Component {
 
     componentWillMount() {
         axios.get('api/v1/checkhash/' + this.state.hashCode)
-        .then((response) =>{
+        .then((response) => {
             if(response.data === 200) {
                 this.setState({
                     realHash : true
@@ -45,7 +45,8 @@ class SubmitEmail extends React.Component {
     postEmail() {
         const emailData = {
             email: ReactDOM.findDOMNode(this.refs.emailInput).value,
-            hashCode: this.state.hashCode
+            hashCode: this.state.hashCode,
+            domain: window.location.host
         };
         axios.post('api/v1/newemail', emailData)
         .then(function(response){
@@ -96,13 +97,36 @@ class Thanks extends React.Component {
 }
 
 
-class FrontPage extends React.Component {
+class Verify extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hashCode : this.props.routeParams.hashCode,
+            verified : false
+        };
+    }
+
+    componentWillMount() {
+        axios.get('api/v1/verifyhash/' + this.state.hashCode)
+        .then((response) => {
+            if(response.data === 200) {
+                this.setState({
+                    verified : true
+                });
+            }
+        });
+    }
+
     render() {
-    	return(
-    		<Lander />
-    	)
+        return(
+            <div className="headerBox">
+                <div className="headerTitle">You're verified!</div>
+                <div>You can now share your referral link!</div>
+            </div>
+        )
     }
 }
+
 
 
 ReactDOM.render(
@@ -111,6 +135,7 @@ ReactDOM.render(
 			<IndexRoute component={SubmitEmail}></IndexRoute>
 			<Route path='thanks' component={Thanks}></Route>
             <Route path=':hashCode' component={SubmitEmail}></Route>
+            <Route path='verify/:hashCode' component={Verify}></Route>
 		</Route>
 	</Router>,
 document.getElementById('content'));
