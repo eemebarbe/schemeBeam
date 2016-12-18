@@ -17,7 +17,7 @@ module.exports = function(app, connection) {
             function sendGrid(referredBy){
                 connection.query('INSERT INTO emails (emailaddress, referralcode, referredby) VALUES (?, ?, ?)', [req.body.email, hashCode, referredBy], function(err, rows, fields) {
                     if (err) {
-                        res.status(401);
+                        res.json(401);
                     } else {
                         var helper = require('sendgrid').mail;
                         var from = new helper.Email("schemeBeam@schemeBeam.com");
@@ -43,6 +43,7 @@ module.exports = function(app, connection) {
                             });
                         }
                         sendMessage();
+                        res.end();
                     }
                 });
             }
@@ -57,8 +58,20 @@ module.exports = function(app, connection) {
                     sendGrid("none");
                 }
         }
-        res.end();
     });
+
+    app.get('api/v1/gethashbyemail/:thisId', function(req, res) {
+        console.log("here");
+        var url_Id = req.param('thisId');
+        connection.query('SELECT referralcode FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){
+          if(rows.length !== 0){
+            res.json(rows);
+          } else {
+            res.json(401);
+          }
+        res.end();
+        });
+    }); 
 
     app.get('/api/v1/checkhash/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
@@ -90,9 +103,14 @@ module.exports = function(app, connection) {
         });
     });
 
-    app.get('/api/v1/topreferrers/', function(req, res) {
-        //fetch the top referrers
-        res.end();
+    app.get('/api/v1/data/', function(req, res) {
+        connection.query(
+            'SELECT * FROM emails ORDER BY referrals DESC, datetime ASC', 
+            function(err, rows, fields){   
+                if(err) throw err;
+                res.json(rows);
+                res.end();
+        });
     });
 
     app.get('/api/v1/getrank/:thisId', function(req, res) {
@@ -100,7 +118,7 @@ module.exports = function(app, connection) {
         console.log(url_Id);
             connection.query(
                 'SELECT * FROM (  SELECT emailaddress, referrals, referralcode, @rownum:=@rownum + 1 as row_number FROM emails t1,' +
-                '(SELECT @rownum := 0) t2 ORDER BY referrals DESC, datetime DESC) t1 WHERE `referralcode`=(?)',[url_Id], 
+                '(SELECT @rownum := 0) t2 ORDER BY referrals DESC, datetime ASC) t1 WHERE `referralcode`=(?)',[url_Id], 
                 function(err, rows, fields){   
                     if(err) throw err;
                     res.json(rows);

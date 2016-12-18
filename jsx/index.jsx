@@ -42,7 +42,9 @@ class SubmitEmail extends React.Component {
         });
     }
 
-    postEmail() {
+    postEmail(e) {
+        e.preventDefault();
+        var self = this;
         const emailData = {
             email: ReactDOM.findDOMNode(this.refs.emailInput).value,
             hashCode: this.state.hashCode,
@@ -50,7 +52,15 @@ class SubmitEmail extends React.Component {
         };
         axios.post('api/v1/newemail', emailData)
         .then(function(response){
-            console.log(response);
+            if(response.data === 401) {
+                axios.get('api/v1/gethashbyemail/' + encodeURIComponent(emailData.email))
+                .then((response) => {
+                    console.log(response);
+                });
+                hashHistory.push('/stats/' + self.state.hashCode);
+            } else {
+                hashHistory.push('/thanks');
+            }
         });
     }
 
@@ -61,7 +71,7 @@ class SubmitEmail extends React.Component {
                         <div className="headerTitle">schemeBeam</div>
                         <form>
                             <input ref="emailInput" className="inputText" type="text" />
-                            <Link to='thanks'><button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button></Link>
+                            <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button>
                         </form>
                     </div>
                 );
@@ -109,7 +119,6 @@ class Stats extends React.Component {
     componentWillMount() {
         axios.get('api/v1/getrank/' + this.state.hashCode)
         .then((response) => {
-            console.log(response);
             this.setState({
                 rank : response.data[0].row_number
             });
@@ -121,6 +130,44 @@ class Stats extends React.Component {
             <div className="headerBox">
                 <div className="headerTitle">Your rank is #{this.state.rank}</div>
                 <div>Congratulations, you're in the top 50! Other participants can still push you out of your rank, so keep referring friends to secure your spot!</div>
+            </div>
+        )
+    }
+}
+
+
+class Data extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+
+    downloadCsv() {
+        axios.get('/api/v1/data/')
+        .then((response) => {
+            var csvData = response.data;
+            var csvList = csvData.map((thisEmail) => {
+                return JSON.stringify(thisEmail.emailaddress);
+            })
+            .join()
+            .replace(/(^\[)|(\]$)/mg, '');
+            var filename = 'emaillist.csv';
+            var data = encodeURI(csvList);
+
+            var link = document.createElement('a');
+            link.setAttribute('href', 'data:text/plain;charset=utf-8,' + data);
+            link.setAttribute('download', filename);
+            link.click();
+        });
+    }
+
+    render() {
+        return(
+            <div className="headerBox">
+                <div className="headerTitle">Winners</div>
+                <button onClick={this.downloadCsv.bind(this)}>Download CSV</button>
             </div>
         )
     }
@@ -164,6 +211,7 @@ ReactDOM.render(
 		<Route path='/' component={Lander}>
 			<IndexRoute component={SubmitEmail}></IndexRoute>
 			<Route path='thanks' component={Thanks}></Route>
+            <Route path='data' component={Data}></Route>           
             <Route path='stats/:hashCode' component={Stats}></Route>
             <Route path=':hashCode' component={SubmitEmail}></Route>
             <Route path='verify/:hashCode' component={Verify}></Route>
