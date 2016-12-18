@@ -53,11 +53,11 @@ class SubmitEmail extends React.Component {
         axios.post('api/v1/newemail', emailData)
         .then(function(response){
             if(response.data === 401) {
-                axios.get('api/v1/gethashbyemail/' + encodeURIComponent(emailData.email))
+                axios.get('api/v1/gethashbyemail?email=' + encodeURIComponent(emailData.email))
                 .then((response) => {
-                    console.log(response);
+                    var redirectHash = response.data[0].referralcode;
+                    hashHistory.push('/stats/' + redirectHash);
                 });
-                hashHistory.push('/stats/' + self.state.hashCode);
             } else {
                 hashHistory.push('/thanks');
             }

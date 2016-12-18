@@ -60,18 +60,6 @@ module.exports = function(app, connection) {
         }
     });
 
-    app.get('api/v1/gethashbyemail/:thisId', function(req, res) {
-        console.log("here");
-        var url_Id = req.param('thisId');
-        connection.query('SELECT referralcode FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){
-          if(rows.length !== 0){
-            res.json(rows);
-          } else {
-            res.json(401);
-          }
-        res.end();
-        });
-    }); 
 
     app.get('/api/v1/checkhash/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
@@ -125,5 +113,19 @@ module.exports = function(app, connection) {
                     res.end();
             });
     });
+
+
+    app.get('/api/v1/gethashbyemail', function(req, res) {
+        console.log("here");
+        var url_Id = req.query.email;
+        connection.query('SELECT referralcode FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){
+          if(rows.length !== 0){
+            res.json(rows);
+          } else {
+            res.json(401);
+          }
+        res.end();
+        });
+    }); 
 
 }
