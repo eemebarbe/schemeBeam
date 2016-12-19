@@ -19,6 +19,7 @@ module.exports = function(app, connection) {
                     if (err) {
                         res.json(401);
                     } else {
+
                         var helper = require('sendgrid').mail;
                         var from = new helper.Email("schemeBeam@schemeBeam.com");
                         var to = new helper.Email(req.body.email);
@@ -37,8 +38,17 @@ module.exports = function(app, connection) {
                           body: mail.toJSON(),
                         });
 
+                        var addContact = sg.emptyRequest({
+                          method: 'POST',
+                          path: '/v3/contactdb/recipients',
+                          body: [{ "email": req.body.email }]
+                        });
+
                         function sendMessage() {
                             sg.API(request, function(error, response) {
+                              // Handle the response here.
+                            });
+                            sg.API(addContact, function(error, response) {
                               // Handle the response here.
                             });
                         }
@@ -77,15 +87,21 @@ module.exports = function(app, connection) {
         var url_Id = req.param('thisId');
         connection.query('SELECT verified,referredby FROM emails WHERE `referralcode`=(?)',[url_Id], function(err, rows, fields){
             if(err) throw err;
-            var referredBy = rows[0].referredby;
-            var verified = rows[0].verified;
-            if(verified === "false") {
-                connection.query('UPDATE emails SET `verified`=(?) WHERE `referralcode`=(?)',["true", url_Id], function(err, rows, fields){
-                    if(err) throw err;
-                    connection.query('UPDATE emails SET referrals = referrals + 1 WHERE `emailaddress`=(?)',[referredBy], function(err, rows, fields){
+            console.log(rows);
+            if(rows.length !== 0) {
+                var referredBy = rows[0].referredby;
+                var verified = rows[0].verified;
+                if(verified === "false") {
+                    connection.query('UPDATE emails SET `verified`=(?) WHERE `referralcode`=(?)',["true", url_Id], function(err, rows, fields){
                         if(err) throw err;
+                        connection.query('UPDATE emails SET referrals = referrals + 1 WHERE `emailaddress`=(?)',[referredBy], function(err, rows, fields){
+                            if(err) throw err;
+                        });
                     });
-                });
+                }
+                res.json(200);
+            } else {
+                res.json(401);
             }
             res.end();
         });
@@ -115,14 +131,35 @@ module.exports = function(app, connection) {
     });
 
 
+    app.get('/api/v1/config/', function(req, res) {
+            connection.query(
+                'SELECT * FROM config', 
+                function(err, rows, fields){   
+                    if(err) throw err;
+                    res.json(rows);
+                    res.end();
+            });
+    });
+
+
+    app.get('/api/v1/count/', function(req, res) {
+            connection.query(
+                'SELECT COUNT(*) AS count FROM emails', 
+                function(err, rows, fields){   
+                    if(err) throw err;
+                    res.json(rows);
+                    res.end();
+            });
+    });
+
+
     app.get('/api/v1/gethashbyemail', function(req, res) {
-        console.log("here");
         var url_Id = req.query.email;
-        connection.query('SELECT referralcode FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){
-          if(rows.length !== 0){
+        connection.query('SELECT referralcode, verified FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){
+          if(rows.length !== 0 && rows[0].verified === "true"){
             res.json(rows);
           } else {
-            res.json(401);
+            res.json(402);
           }
         res.end();
         });

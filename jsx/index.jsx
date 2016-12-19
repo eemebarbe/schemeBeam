@@ -52,11 +52,17 @@ class SubmitEmail extends React.Component {
         };
         axios.post('api/v1/newemail', emailData)
         .then(function(response){
+            //in the case that the email address is already in the system, redirect to stats page
             if(response.data === 401) {
                 axios.get('api/v1/gethashbyemail?email=' + encodeURIComponent(emailData.email))
                 .then((response) => {
-                    var redirectHash = response.data[0].referralcode;
-                    hashHistory.push('/stats/' + redirectHash);
+                    //in the case that they're not yet verified, do not supply them with their referral code or stats page
+                    if(response.data === 402) {
+                        alert("your account isn't verified yet!");
+                    } else {
+                        var redirectHash = response.data[0].referralcode;
+                        hashHistory.push('/stats/' + redirectHash);
+                    }
                 });
             } else {
                 hashHistory.push('/thanks');
@@ -140,9 +146,25 @@ class Data extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            topRange : 0,
+            totalCollected : 0
         };
     }
 
+    componentWillMount() {
+        axios.get('/api/v1/config/')
+        .then((response) => {
+            this.setState({
+                topRange : response.data[0].winnerRange
+            });
+        });
+        axios.get('/api/v1/count/')
+        .then((response) => {
+            this.setState({
+                totalCollected : response.data[0].count
+            });
+        });
+    }
 
     downloadCsv() {
         axios.get('/api/v1/data/')
@@ -151,11 +173,11 @@ class Data extends React.Component {
             var csvList = csvData.map((thisEmail) => {
                 return JSON.stringify(thisEmail.emailaddress);
             })
-            .join()
+            .join("\r\n")
             .replace(/(^\[)|(\]$)/mg, '');
+            var csvList = "Email Address" + "\r\n" + csvList;
             var filename = 'emaillist.csv';
             var data = encodeURI(csvList);
-
             var link = document.createElement('a');
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + data);
             link.setAttribute('download', filename);
@@ -165,8 +187,9 @@ class Data extends React.Component {
 
     render() {
         return(
-            <div className="headerBox">
-                <div className="headerTitle">Winners</div>
+            <div>
+                <div>Top range for winners: {this.state.topRange}<button>Change</button></div>
+                <div>Total emails collected: {this.state.totalCollected}</div>
                 <button onClick={this.downloadCsv.bind(this)}>Download CSV</button>
             </div>
         )
@@ -186,6 +209,7 @@ class Verify extends React.Component {
     componentWillMount() {
         axios.get('api/v1/verifyhash/' + this.state.hashCode)
         .then((response) => {
+            console.log(response.data);
             if(response.data === 200) {
                 this.setState({
                     verified : true
@@ -195,10 +219,24 @@ class Verify extends React.Component {
     }
 
     render() {
-        return(
+        if(this.state.verified === true) {
+            var verfication = (
             <div className="headerBox">
                 <div className="headerTitle">You're verified!</div>
                 <div>You can now share your referral link!</div>
+            </div> 
+            );          
+        } else {
+            var verfication = (
+            <div className="headerBox">
+                <div className="headerTitle">Not a valid referral code!</div>
+                <div>Check your link and try again.</div>
+            </div> 
+            );
+        }
+        return(
+            <div>
+                {verfication}
             </div>
         )
     }
