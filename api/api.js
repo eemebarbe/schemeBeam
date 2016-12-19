@@ -1,4 +1,5 @@
 var md5 = require('md5');
+var sg = require('sendgrid')(SENDGRID_API_KEY);
 
 
 module.exports = function(app, connection) {
@@ -19,7 +20,7 @@ module.exports = function(app, connection) {
                     if (err) {
                         res.json(401);
                     } else {
-
+                        //send verification email
                         var helper = require('sendgrid').mail;
                         var from = new helper.Email("schemeBeam@schemeBeam.com");
                         var to = new helper.Email(req.body.email);
@@ -38,21 +39,9 @@ module.exports = function(app, connection) {
                           body: mail.toJSON(),
                         });
 
-                        var addContact = sg.emptyRequest({
-                          method: 'POST',
-                          path: '/v3/contactdb/recipients',
-                          body: [{ "email": req.body.email }]
+                        sg.API(request, function(error, response) {
+                          // Handle the response here.
                         });
-
-                        function sendMessage() {
-                            sg.API(request, function(error, response) {
-                              // Handle the response here.
-                            });
-                            sg.API(addContact, function(error, response) {
-                              // Handle the response here.
-                            });
-                        }
-                        sendMessage();
                         res.end();
                     }
                 });
@@ -85,15 +74,24 @@ module.exports = function(app, connection) {
 
     app.get('/api/v1/verifyhash/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
-        connection.query('SELECT verified,referredby FROM emails WHERE `referralcode`=(?)',[url_Id], function(err, rows, fields){
+        connection.query('SELECT verified,referredby,emailaddress FROM emails WHERE `referralcode`=(?)',[url_Id], function(err, rows, fields){
             if(err) throw err;
-            console.log(rows);
             if(rows.length !== 0) {
                 var referredBy = rows[0].referredby;
                 var verified = rows[0].verified;
+                var emailaddress = rows[0].emailaddress;
                 if(verified === "false") {
                     connection.query('UPDATE emails SET `verified`=(?) WHERE `referralcode`=(?)',["true", url_Id], function(err, rows, fields){
                         if(err) throw err;
+                        var addContact = sg.emptyRequest({
+                          method: 'POST',
+                          path: '/v3/contactdb/recipients',
+                          body: [{ "email": emailaddress }]
+                        });
+                        sg.API(addContact, function(error, response) {
+                          // Handle the response here.
+                        });
+
                         connection.query('UPDATE emails SET referrals = referrals + 1 WHERE `emailaddress`=(?)',[referredBy], function(err, rows, fields){
                             if(err) throw err;
                         });

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-export class Stats extends React.Component {
+class Stats extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,3 +29,5 @@ export class Stats extends React.Component {
         )
     }
 }
+
+export default Stats;

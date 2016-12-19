@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-export class Admin extends React.Component {
+class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,3 +55,5 @@ export class Admin extends React.Component {
         )
     }
 }
+
+export default Admin;

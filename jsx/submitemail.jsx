@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { Link, Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 export class SubmitEmail extends React.Component {
     constructor(props) {

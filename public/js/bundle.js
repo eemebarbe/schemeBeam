@@ -26843,7 +26843,6 @@ webpackJsonp([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Stats = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -26867,7 +26866,7 @@ webpackJsonp([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Stats = exports.Stats = function (_React$Component) {
+	var Stats = function (_React$Component) {
 	    _inherits(Stats, _React$Component);
 
 	    function Stats(props) {
@@ -26917,6 +26916,8 @@ webpackJsonp([0,1],[
 	    return Stats;
 	}(_react2.default.Component);
 
+	exports.default = Stats;
+
 /***/ },
 /* 244 */
 /***/ function(module, exports, __webpack_require__) {
@@ -26926,7 +26927,6 @@ webpackJsonp([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Verify = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -26942,6 +26942,8 @@ webpackJsonp([0,1],[
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _reactRouter = __webpack_require__(163);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26950,7 +26952,7 @@ webpackJsonp([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Verify = exports.Verify = function (_React$Component) {
+	var Verify = function (_React$Component) {
 	    _inherits(Verify, _React$Component);
 
 	    function Verify(props) {
@@ -26970,6 +26972,7 @@ webpackJsonp([0,1],[
 	        value: function componentWillMount() {
 	            var _this2 = this;
 
+	            console.log(this.props.routeParams.hashCode);
 	            _axios2.default.get('api/v1/verifyhash/' + this.state.hashCode).then(function (response) {
 	                console.log(response.data);
 	                if (response.data === 200) {
@@ -27024,6 +27027,8 @@ webpackJsonp([0,1],[
 	    return Verify;
 	}(_react2.default.Component);
 
+	exports.default = Verify;
+
 /***/ },
 /* 245 */
 /***/ function(module, exports, __webpack_require__) {
@@ -27033,7 +27038,6 @@ webpackJsonp([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Admin = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -27057,7 +27061,7 @@ webpackJsonp([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Admin = exports.Admin = function (_React$Component) {
+	var Admin = function (_React$Component) {
 	    _inherits(Admin, _React$Component);
 
 	    function Admin(props) {
@@ -27140,6 +27144,8 @@ webpackJsonp([0,1],[
 	    return Admin;
 	}(_react2.default.Component);
 
+	exports.default = Admin;
+
 /***/ },
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
@@ -27164,6 +27170,8 @@ webpackJsonp([0,1],[
 	var _axios = __webpack_require__(218);
 
 	var _axios2 = _interopRequireDefault(_axios);
+
+	var _reactRouter = __webpack_require__(163);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27220,11 +27228,11 @@ webpackJsonp([0,1],[
 	                            alert("your account isn't verified yet!");
 	                        } else {
 	                            var redirectHash = response.data[0].referralcode;
-	                            hashHistory.push('/stats/' + redirectHash);
+	                            _reactRouter.hashHistory.push('/stats/' + redirectHash);
 	                        }
 	                    });
 	                } else {
-	                    hashHistory.push('/thanks');
+	                    _reactRouter.hashHistory.push('/thanks');
 	                }
 	            });
 	        }
