@@ -9,11 +9,10 @@ module.exports = {
   entry: {
     index: APP_DIR + '/index.jsx'
   },
-  
-
   output: {
     path: BUILD_DIR,
-    filename: '[name].js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
 
   module : {
@@ -40,11 +39,6 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
             }
         })
     ]
