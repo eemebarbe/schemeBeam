@@ -70,7 +70,6 @@ module.exports = function(app, connection) {
           } else {
             res.json(401);
           }
-        res.end();
         });
     });
 
@@ -106,7 +105,6 @@ module.exports = function(app, connection) {
             } else {
                 res.json(401);
             }
-            res.end();
         });
     });
 
@@ -117,7 +115,6 @@ module.exports = function(app, connection) {
             function(err, rows, fields){   
                 if(err) throw err;
                 res.json(rows);
-                res.end();
         });
     });
 
@@ -131,7 +128,6 @@ module.exports = function(app, connection) {
                 function(err, rows, fields){   
                     if(err) throw err;
                     res.json(rows);
-                    res.end();
             });
     });
 
@@ -142,7 +138,6 @@ module.exports = function(app, connection) {
                 function(err, rows, fields){   
                     if(err) throw err;
                     res.json(rows);
-                    res.end();
             });
     });
 
@@ -153,7 +148,6 @@ module.exports = function(app, connection) {
                 function(err, rows, fields){   
                     if(err) throw err;
                     res.json(rows);
-                    res.end();
             });
     });
 
@@ -166,8 +160,16 @@ module.exports = function(app, connection) {
           } else {
             res.json(402);
           }
-        res.end();
         });
-    }); 
+    });
+
+    //get list of contestants within specified range
+    app.get('/api/v1/toprange', function(req, res){
+        var limit = 3;
+        connection.query('SELECT emailaddress FROM emails ORDER BY referrals DESC, datetime ASC LIMIT ?',[limit], function(err, rows, fields){
+            if (err) throw err;
+            res.json(rows);
+       });
+    });
 
 }
