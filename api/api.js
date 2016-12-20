@@ -4,6 +4,7 @@ var sg = require('sendgrid')(SENDGRID_API_KEY);
 
 module.exports = function(app, connection) {
 
+    //add email address to database, create a verification code, and send verification link to email address
     app.post('/api/v1/newemail', function(req, res) {
         // regex on both client and server side for protection in case JS is augmented
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -14,7 +15,7 @@ module.exports = function(app, connection) {
             var name = email.substring(0, email.lastIndexOf("@"));
             var domain = email.substring(email.lastIndexOf("@") +1);
             var hashCode = md5(name + domain);
-
+            //send verification email
             function sendGrid(referredBy){
                 connection.query('INSERT INTO emails (emailaddress, referralcode, referredby) VALUES (?, ?, ?)', [req.body.email, hashCode, referredBy], function(err, rows, fields) {
                     if (err) {
@@ -46,20 +47,21 @@ module.exports = function(app, connection) {
                     }
                 });
             }
-            //pass hash code to select the user who gets a referral point
-                if(req.body.hashCode !== undefined){
-                    connection.query('SELECT emailaddress FROM emails WHERE `referralcode`=(?)', [req.body.hashCode], function(err, rows, fields) {
-                        if(err) throw err;
-                        var data = rows[0].emailaddress;
-                        sendGrid(data);
-                    });
-                } else {
-                    sendGrid("none");
-                }
+            //pass referral code to select the user who gets a referral point
+            if(req.body.hashCode !== undefined){
+                connection.query('SELECT emailaddress FROM emails WHERE `referralcode`=(?)', [req.body.hashCode], function(err, rows, fields) {
+                    if(err) throw err;
+                    var data = rows[0].emailaddress;
+                    sendGrid(data);
+                });
+            //if no referral code used
+            } else {
+                sendGrid("none");
+            }
         }
     });
 
-
+    //checks if referral code is valid
     app.get('/api/v1/checkhash/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
         connection.query('SELECT referralcode FROM emails WHERE `referralcode`=(?)',[url_Id], function(err, rows, fields){
@@ -72,6 +74,7 @@ module.exports = function(app, connection) {
         });
     });
 
+    //verifies referral code to be used by contestant
     app.get('/api/v1/verifyhash/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
         connection.query('SELECT verified,referredby,emailaddress FROM emails WHERE `referralcode`=(?)',[url_Id], function(err, rows, fields){
@@ -80,9 +83,11 @@ module.exports = function(app, connection) {
                 var referredBy = rows[0].referredby;
                 var verified = rows[0].verified;
                 var emailaddress = rows[0].emailaddress;
+                //if not yet verified, change status to verified
                 if(verified === "false") {
                     connection.query('UPDATE emails SET `verified`=(?) WHERE `referralcode`=(?)',["true", url_Id], function(err, rows, fields){
                         if(err) throw err;
+                        //add email address to contact list now that it's verified
                         var addContact = sg.emptyRequest({
                           method: 'POST',
                           path: '/v3/contactdb/recipients',
@@ -91,7 +96,7 @@ module.exports = function(app, connection) {
                         sg.API(addContact, function(error, response) {
                           // Handle the response here.
                         });
-
+                        //add a referral point to the contestant that referred the newly verified contestant
                         connection.query('UPDATE emails SET referrals = referrals + 1 WHERE `emailaddress`=(?)',[referredBy], function(err, rows, fields){
                             if(err) throw err;
                         });
@@ -105,6 +110,7 @@ module.exports = function(app, connection) {
         });
     });
 
+    //gets full list of emails entered
     app.get('/api/v1/data/', function(req, res) {
         connection.query(
             'SELECT * FROM emails ORDER BY referrals DESC, datetime ASC', 
@@ -115,6 +121,7 @@ module.exports = function(app, connection) {
         });
     });
 
+    //get the rank of the contestant
     app.get('/api/v1/getrank/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
         console.log(url_Id);
@@ -128,7 +135,7 @@ module.exports = function(app, connection) {
             });
     });
 
-
+    //gets configuration data for campaign
     app.get('/api/v1/config/', function(req, res) {
             connection.query(
                 'SELECT * FROM config', 
@@ -139,7 +146,7 @@ module.exports = function(app, connection) {
             });
     });
 
-
+    //gets the number of total emails collected
     app.get('/api/v1/count/', function(req, res) {
             connection.query(
                 'SELECT COUNT(*) AS count FROM emails', 
@@ -150,7 +157,7 @@ module.exports = function(app, connection) {
             });
     });
 
-
+    //get the referral code of the contestant from their email address
     app.get('/api/v1/gethashbyemail', function(req, res) {
         var url_Id = req.query.email;
         connection.query('SELECT referralcode, verified FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){

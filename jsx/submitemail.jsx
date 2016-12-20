@@ -25,30 +25,43 @@ export class SubmitEmail extends React.Component {
 
     postEmail(e) {
         e.preventDefault();
+
         var self = this;
         const emailData = {
             email: ReactDOM.findDOMNode(this.refs.emailInput).value,
             hashCode: this.state.hashCode,
             domain: window.location.host
         };
-        axios.post('api/v1/newemail', emailData)
-        .then(function(response){
-            //in the case that the email address is already in the system, redirect to stats page
-            if(response.data === 401) {
-                axios.get('api/v1/gethashbyemail?email=' + encodeURIComponent(emailData.email))
-                .then((response) => {
-                    //in the case that they're not yet verified, do not supply them with their referral code or stats page
-                    if(response.data === 402) {
-                        alert("your account isn't verified yet!");
+        //if email form is blank when submission button is clicked
+        if (!emailData.email) {
+            alert('Please enter your email address!');
+        //if form is not blank, do a regex check
+        } else if (emailData.email !== null || emailData.email !== '') {
+            const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!re.test(emailData.email)) {
+                alert('Not a valid email address!');
+            //if it passes, log new email
+            } else {
+                axios.post('api/v1/newemail', emailData)
+                .then(function(response){
+                    //in the case that the email address is already in the system, redirect to stats page
+                    if(response.data === 401) {
+                        axios.get('api/v1/gethashbyemail?email=' + encodeURIComponent(emailData.email))
+                        .then((response) => {
+                            //in the case that they're not yet verified, do not supply them with their referral code or stats page
+                            if(response.data === 402) {
+                                alert("your account isn't verified yet!");
+                            } else {
+                                var redirectHash = response.data[0].referralcode;
+                                hashHistory.push('/stats/' + redirectHash);
+                            }
+                        });
                     } else {
-                        var redirectHash = response.data[0].referralcode;
-                        hashHistory.push('/stats/' + redirectHash);
+                        hashHistory.push('/thanks');
                     }
                 });
-            } else {
-                hashHistory.push('/thanks');
             }
-        });
+        }
     }
 
     render() {
