@@ -4,7 +4,7 @@ module.exports = {
   //Port on which to deploy app.js
   "port": 80,
   //Your personal SendGrid API key. 
-  "SENDGRID_API_KEY": "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",
+  "SENDGRID_API_KEY": "your api key",
   //Mysql configuration
   "mysql": {
     "host": "localhost",
