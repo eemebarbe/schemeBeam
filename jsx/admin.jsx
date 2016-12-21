@@ -34,16 +34,16 @@ class Admin extends React.Component {
         }
         axios.get(ajax)
         .then((response) => {
-            var csvData = response.data;
+            const csvData = response.data;
             var csvList = csvData.map((thisEmail) => {
                 return JSON.stringify(thisEmail.emailaddress);
             })
             .join("\r\n")
             .replace(/(^\[)|(\]$)/mg, '');
             var csvList = "Email Address" + "\r\n" + csvList;
-            var filename = csvType + '.csv';
-            var data = encodeURI(csvList);
-            var link = document.createElement('a');
+            const filename = csvType + '.csv';
+            const data = encodeURI(csvList);
+            const link = document.createElement('a');
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + data);
             link.setAttribute('download', filename);
             link.click();

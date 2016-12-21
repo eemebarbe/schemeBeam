@@ -13,7 +13,6 @@ class Verify extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.props.routeParams.hashCode);
         axios.get('api/v1/verifyhash/' + this.state.hashCode)
         .then((response) => {
             console.log(response.data);
@@ -27,14 +26,19 @@ class Verify extends React.Component {
 
     render() {
         if(this.state.verified === true) {
-            var verfication = (
+            var referralLink = window.location.hostname + "/#/" + this.state.hashCode;
+            var referralLink = referralLink.toString();
+            var verification = (
             <div className="headerBox">
                 <div className="headerTitle">You're verified!</div>
                 <div>You can now share your referral link!</div>
-            </div> 
+                <a href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
+                <a href={"https://twitter.com/home?status=" + referralLink}><i className="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
+                <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-3x" aria-hidden="true"></i></a>
+            </div>
             );          
         } else {
-            var verfication = (
+            var verification = (
             <div className="headerBox">
                 <div className="headerTitle">Not a valid referral code!</div>
                 <div>Check your link and try again.</div>
@@ -43,7 +47,7 @@ class Verify extends React.Component {
         }
         return(
             <div>
-                {verfication}
+                {verification}
             </div>
         )
     }

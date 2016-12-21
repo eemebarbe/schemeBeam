@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link, Router, Route, IndexRoute, hashHistory } from 'react-router';
+import * as settings from '../settingsconfig.js';
 
 export class SubmitEmail extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ export class SubmitEmail extends React.Component {
     postEmail(e) {
         e.preventDefault();
 
-        var self = this;
+        const self = this;
         const emailData = {
             email: ReactDOM.findDOMNode(this.refs.emailInput).value,
             hashCode: this.state.hashCode,
@@ -43,7 +44,7 @@ export class SubmitEmail extends React.Component {
             //if it passes, log new email
             } else {
                 axios.post('api/v1/newemail', emailData)
-                .then(function(response){
+                .then((response) => {
                     //in the case that the email address is already in the system, redirect to stats page
                     if(response.data === 401) {
                         axios.get('api/v1/gethashbyemail?email=' + encodeURIComponent(emailData.email))
@@ -52,7 +53,7 @@ export class SubmitEmail extends React.Component {
                             if(response.data === 402) {
                                 alert("your account isn't verified yet!");
                             } else {
-                                var redirectHash = response.data[0].referralcode;
+                                const redirectHash = response.data[0].referralcode;
                                 hashHistory.push('/stats/' + redirectHash);
                             }
                         });
@@ -69,6 +70,7 @@ export class SubmitEmail extends React.Component {
                 var checkHash = (
                     <div>
                         <div className="headerTitle">schemeBeam</div>
+                        <div>{settings.landerPageMessage}</div>
                         <form>
                             <input ref="emailInput" className="inputText" type="text" />
                             <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button>

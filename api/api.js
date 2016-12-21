@@ -1,5 +1,6 @@
 var md5 = require('md5');
-var sg = require('sendgrid')(SENDGRID_API_KEY);
+var adminConfig = require('../adminconfig.js');
+var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
 
 module.exports = function(app, connection) {
@@ -111,7 +112,7 @@ module.exports = function(app, connection) {
     //gets full list of emails entered
     app.get('/api/v1/data/', function(req, res) {
         connection.query(
-            'SELECT * FROM emails ORDER BY referrals DESC, datetime ASC', 
+            'SELECT emailaddress FROM emails WHERE `verified`=\'true\' ORDER BY referrals DESC, datetime ASC', 
             function(err, rows, fields){   
                 if(err) throw err;
                 res.json(rows);
