@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import * as settings from '../settingsconfig.js';
+import * as settings from '../config/settingsconfig.js';
 
 class Stats extends React.Component {
     constructor(props) {

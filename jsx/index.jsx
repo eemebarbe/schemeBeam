@@ -34,7 +34,7 @@ ReactDOM.render(
 			<Route path='thanks' component={Thanks}></Route>
             <Route path='admin' component={Admin}></Route>           
             <Route path='stats/:hashCode' component={Stats}></Route>
-            <Route path=':hashCode' component={SubmitEmail}></Route>
+            <Route path='referral/:hashCode' component={SubmitEmail}></Route>
             <Route path='verify/:hashCode' component={Verify}></Route>
 		</Route>
 	</Router>,

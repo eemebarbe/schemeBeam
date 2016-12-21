@@ -6,18 +6,11 @@ class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            topRange : 0,
             totalCollected : 0
         };
     }
 
     componentWillMount() {
-        axios.get('/api/v1/config/')
-        .then((response) => {
-            this.setState({
-                topRange : response.data[0].winnerRange
-            });
-        });
         axios.get('/api/v1/count/')
         .then((response) => {
             this.setState({
@@ -53,7 +46,6 @@ class Admin extends React.Component {
     render() {
         return(
             <div>
-                <div>Top range for winners: {this.state.topRange}<button>Change</button></div>
                 <div>Total emails collected: {this.state.totalCollected}</div>
                 <button onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
                 <button onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>

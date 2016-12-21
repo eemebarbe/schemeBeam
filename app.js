@@ -4,7 +4,7 @@ var app = express();
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var router = express.Router();
-var adminConfig = require('./adminconfig.js');
+var adminConfig = require('./config/adminconfig.js');
 
 
 //database configuration
@@ -17,8 +17,6 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-
-var env = require("./env.js");
 
 
 //route configuration

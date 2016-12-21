@@ -1,9 +1,10 @@
 var md5 = require('md5');
-var adminConfig = require('../adminconfig.js');
+var adminConfig = require('../config/adminconfig.js');
 var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
-
 module.exports = function(app, connection) {
+
+var ensureAuthenticated = require('../authentication/auth.js')(app);
 
     //add email address to database, create a verification code, and send verification link to email address
     app.post('/api/v1/newemail', function(req, res) {
@@ -110,7 +111,7 @@ module.exports = function(app, connection) {
     });
 
     //gets full list of emails entered
-    app.get('/api/v1/data/', function(req, res) {
+    app.get('/api/v1/data/', ensureAuthenticated, function(req, res) {
         connection.query(
             'SELECT emailaddress FROM emails WHERE `verified`=\'true\' ORDER BY referrals DESC, datetime ASC', 
             function(err, rows, fields){   
@@ -132,18 +133,8 @@ module.exports = function(app, connection) {
             });
     });
 
-    //gets configuration data for campaign
-    app.get('/api/v1/config/', function(req, res) {
-            connection.query(
-                'SELECT * FROM config', 
-                function(err, rows, fields){   
-                    if(err) throw err;
-                    res.json(rows);
-            });
-    });
-
     //gets the number of total emails collected
-    app.get('/api/v1/count/', function(req, res) {
+    app.get('/api/v1/count/', function(req, res){
             connection.query(
                 'SELECT COUNT(*) AS count FROM emails', 
                 function(err, rows, fields){   
@@ -153,7 +144,7 @@ module.exports = function(app, connection) {
     });
 
     //get the referral code of the contestant from their email address
-    app.get('/api/v1/gethashbyemail', function(req, res) {
+    app.get('/api/v1/gethashbyemail', function(req, res){
         var url_Id = req.query.email;
         connection.query('SELECT referralcode, verified FROM emails WHERE `emailaddress`=(?)',[url_Id], function(err, rows, fields){
           if(rows.length !== 0 && rows[0].verified === "true"){
@@ -165,8 +156,8 @@ module.exports = function(app, connection) {
     });
 
     //get list of contestants within specified range
-    app.get('/api/v1/toprange', function(req, res){
-        var limit = 3;
+    app.get('/api/v1/toprange', ensureAuthenticated, function(req, res){
+        var limit = adminConfig.prizeRange;
         connection.query('SELECT emailaddress FROM emails ORDER BY referrals DESC, datetime ASC LIMIT ?',[limit], function(err, rows, fields){
             if (err) throw err;
             res.json(rows);
