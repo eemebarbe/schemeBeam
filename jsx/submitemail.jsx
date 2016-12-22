@@ -68,13 +68,13 @@ export class SubmitEmail extends React.Component {
     render() {
             if(this.state.realHash === true || this.state.hashCode === undefined){
                 var checkHash = (
-                    <div>
+                    <div className="flexBoxDiv">
                         <div className="headerTitle">schemeBeam</div>
-                        <div>{settings.landerPageMessage}</div>
+                        <div className="landerPageMessage">{settings.landerPageMessage}</div>
                         <form>
                             <input ref="emailInput" className="inputText" type="text" />
-                            <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button>
                         </form>
+                        <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button>
                     </div>
                 );
             } else {

@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-class Admin extends React.Component {
+
+export class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -54,4 +55,28 @@ class Admin extends React.Component {
     }
 }
 
-export default Admin;
+
+export class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    logIn(){
+
+    }
+
+    render() {
+        return(
+            <div>
+                <form>
+                    <input ref="usernameInput" className="inputText" type="text" />
+                    <input ref="passwordInput" className="inputText" type="text" />
+                    <button onClick={this.logIn.bind(this)} ref="adminSubmit" className="inputButton">Submit</button>
+                </form>
+            </div>
+        )
+    }
+}
+

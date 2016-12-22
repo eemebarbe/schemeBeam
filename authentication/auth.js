@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function(app, connection) {
 
     var passport = require('passport');
     var cookieParser = require('cookie-parser');
@@ -72,6 +72,18 @@ module.exports = function(app) {
             res.redirect('/#/login');
         }
     }
+
+    return function routerAuth(req, res, next) {
+        if (req.isAuthenticated()) {
+            console.log('here');
+            res.type('200');
+        } else {
+            console.log('there');
+            res.type('401');
+        }
+    }
+
+
 
 
 }
