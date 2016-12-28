@@ -20,6 +20,8 @@ body {
 
 .flexBoxDiv {
 	position: relative;
+	width: 400px;
+	text-align: center;
 	margin: 20px;
 	background-color: lightgray;
 	padding: 20px;
@@ -29,10 +31,6 @@ body {
 
 .landerPageMessage {
 	margin-bottom: 40px;
-}
-
-.headerBox {
-	text-align: center;
 }
 
 .headerTitle {

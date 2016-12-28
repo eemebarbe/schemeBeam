@@ -19,7 +19,9 @@ class Lander extends React.Component {
     	return(
     		<div>
     			<div className="tile">
-    			{this.props.children}
+                    <div className="flexBoxDiv">
+                        {this.props.children}
+                    </div>
 				</div>
     		</div>
     	)

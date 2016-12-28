@@ -10,3 +10,7 @@ A free, open source referral marketing application similar in function to Maitre
 
 schemeBeam will be available soon, along with a tutorial and installation instructions. Please follow and star this repository if you would like to stay updated.
 
+## License
+
+The code, documentation, non-branded copy and configuration are released under
+the MIT license.

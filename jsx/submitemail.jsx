@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link, Router, Route, IndexRoute, hashHistory } from 'react-router';
 import * as settings from '../config/settingsconfig.js';
 
+
 export class SubmitEmail extends React.Component {
     constructor(props) {
         super(props);
@@ -68,7 +69,7 @@ export class SubmitEmail extends React.Component {
     render() {
             if(this.state.realHash === true || this.state.hashCode === undefined){
                 var checkHash = (
-                    <div className="flexBoxDiv">
+                    <div>
                         <div className="headerTitle">schemeBeam</div>
                         <div className="landerPageMessage">{settings.landerPageMessage}</div>
                         <form>
@@ -84,7 +85,7 @@ export class SubmitEmail extends React.Component {
             }
 
         return(
-            <div className="headerBox">
+            <div>
                 {checkHash}
             </div>
         )
@@ -99,7 +100,7 @@ export class Thanks extends React.Component {
     }
     render() {
         return(
-            <div className="headerBox">
+            <div>
                 <div className="headerTitle">Thanks!</div>
                 <div>Check your email for your referral link!</div>
             </div>
