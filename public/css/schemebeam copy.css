@@ -1,0 +1,65 @@
+input:focus {
+    outline:none !important;
+}
+
+body {
+	background-color: lightblue;
+	margin: 0;
+	padding: 0;
+	font-family: 'Libre Franklin', sans-serif;
+	font-size: 16px;
+}
+
+.tile {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+}
+
+.flexBoxDiv {
+	position: relative;
+	width: 400px;
+	text-align: center;
+	margin: 20px;
+	background-color: lightgray;
+	padding: 20px;
+	padding-bottom: 40px;
+	padding-top: 40px;
+}
+
+.landerPageMessage {
+	margin-bottom: 40px;
+}
+
+.headerTitle {
+	font-size: 40px;
+	margin-bottom: 20px;
+}
+
+.inputText {
+	height: 40px;
+	font-size: 16px;
+	width: 100%;
+	padding: 0;
+	margin-bottom: 20px;
+	border: none;
+	text-align: center;
+}
+
+.inputButton {
+	height: 60px;
+	font-size: 20px; 
+	background-color: orange;
+	width: 100%;
+	border: none;
+}
+
+.shareCase {
+	margin-top: 20px;
+}
+
+.shareCase i {
+	margin: 2.5px;
+}

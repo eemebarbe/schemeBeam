@@ -73,9 +73,9 @@ export class SubmitEmail extends React.Component {
                         <div className="headerTitle">schemeBeam</div>
                         <div className="landerPageMessage">{settings.landerPageMessage}</div>
                         <form>
-                            <input ref="emailInput" className="inputText" type="text" />
+                            <input ref="emailInput" className="inputText" type="text" placeholder="Enter your email here." />
                         </form>
-                        <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton">Submit</button>
+                        <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Submit</button>
                     </div>
                 );
             } else {
@@ -102,7 +102,7 @@ export class Thanks extends React.Component {
         return(
             <div>
                 <div className="headerTitle">Thanks!</div>
-                <div>Check your email for your referral link!</div>
+                <div className="secondaryHeader">Check your email for your referral link, and make sure you verify the link before you start sharing!</div>
             </div>
         )
     }

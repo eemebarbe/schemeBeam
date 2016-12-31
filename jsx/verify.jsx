@@ -31,17 +31,20 @@ class Verify extends React.Component {
             var verification = (
             <div className="headerBox">
                 <div className="headerTitle">You're verified!</div>
-                <div>You can now share your referral link!</div>
-                <a href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
-                <a href={"https://twitter.com/home?status=" + referralLink}><i className="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
-                <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-3x" aria-hidden="true"></i></a>
+                <div className="secondaryHeader">You can now share your referral link!</div>
+                <div className="shareCase">
+                <a href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                <a href={"https://twitter.com/home?status=" + referralLink}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+                <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+                </div>
             </div>
             );          
         } else {
             var verification = (
             <div className="headerBox">
                 <div className="headerTitle">Not a valid referral code!</div>
-                <div>Check your link and try again.</div>
+                <div className="secondaryHeader">Check your link and try again.</div>
             </div> 
             );
         }

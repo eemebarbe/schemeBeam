@@ -2,11 +2,15 @@ input:focus {
     outline:none !important;
 }
 
+button:focus {
+    outline:none !important;
+}
+
 body {
 	background-color: lightblue;
 	margin: 0;
 	padding: 0;
-	font-family: 'Libre Franklin', sans-serif;
+	font-family: 'Quicksand', sans-serif;
 	font-size: 16px;
 }
 
@@ -23,19 +27,35 @@ body {
 	width: 400px;
 	text-align: center;
 	margin: 20px;
-	background-color: lightgray;
+	background-color: #fafafa;
 	padding: 20px;
 	padding-bottom: 40px;
 	padding-top: 40px;
+	border: 1px solid #D5DADF;
+	border-radius: 9px;
+	-webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.25);
+	-moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.25);
+	box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.25);
 }
 
 .landerPageMessage {
+	border-top: 1px solid #D5DADF;
+	padding-top: 40px;
 	margin-bottom: 40px;
+	color: #9fa4b3;
+}
+
+.secondaryHeader {
+	color: #9fa4b3;
+	margin-bottom: 20px;
 }
 
 .headerTitle {
-	font-size: 40px;
-	margin-bottom: 20px;
+	font-size: 48px;
+	line-height: 48px;
+	width: 100%;
+	color: #2f303b;
+	padding-bottom: 40px;
 }
 
 .inputText {
@@ -44,14 +64,66 @@ body {
 	width: 100%;
 	padding: 0;
 	margin-bottom: 20px;
-	border: none;
+	border: 1px solid #D5DADF;
 	text-align: center;
+	border-radius: 3px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #D5DADF;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #D5DADF;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #D5DADF;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #D5DADF;
 }
 
 .inputButton {
-	height: 60px;
-	font-size: 20px; 
-	background-color: orange;
 	width: 100%;
-	border: none;
+	font-size: 20px; 
+	height: 60px;
+}
+
+.button {
+	color: white; 
+	border: 1px solid #05abe0;
+	border-radius: 3px;
+	background: #87e0fd; /* Old browsers */
+	background: -moz-linear-gradient(top,  #87e0fd 0%, #53cbf1 50%, #05abe0 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #87e0fd 0%,#53cbf1 50%,#05abe0 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #87e0fd 0%,#53cbf1 50%,#05abe0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 ); /* IE6-9 */
+}
+
+.shareCase {
+	margin-top: 40px;
+}
+
+.shareCase i {
+	margin: 2.5px;
+}
+
+.fa-facebook-square {
+	color: #3B5998;
+}
+
+.fa-twitter-square {
+	color: #00ACED;
+}
+
+.fa-google-plus-square {
+	color: #CD3C2A;
+}
+
+.fa-linkedin-square {
+	color: #4875B4;
+}
+
+.adminContainer {
+	border-top: 1px solid #D5DADF;
+	padding-top: 40px;
 }

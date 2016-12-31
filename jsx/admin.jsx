@@ -47,9 +47,12 @@ export class Admin extends React.Component {
     render() {
         return(
             <div>
+                <div className="headerTitle">Admin Panel</div>
+                <div className="adminContainer">
                 <div>Total emails collected: {this.state.totalCollected}</div>
-                <button onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
-                <button onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>
+                <button className="button" onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
+                <button className="button" onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>
+                </div>
             </div>
         )
     }
