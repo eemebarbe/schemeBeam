@@ -2,61 +2,36 @@ module.exports = function(app, connection) {
 
     var passport = require('passport');
     var cookieParser = require('cookie-parser');
-    var expressSession = require('express-session');
-    var LocalStrategy = require('passport-local').Strategy;
+    var Strategy = require('passport-local');
     var adminConfig = require('../config/adminconfig.js');
+    var jwt = require('jsonwebtoken');
+    var expressJwt = require('express-jwt');
+    var authenticate = expressJwt({secret : 'server secret'});
 
 
-    app.use(expressSession({
-        secret: adminConfig.passportSecret
-    }));
     app.use(passport.initialize());
-    app.use(passport.session());
 
     // authentication method for verifying a user attempting to log-in
-    app.post('/loginAuth', function(req, res, next) {
-        passport.authenticate('local', function(err, user, info) {
-            if (err) {
-                return next(err);
-            } else if (!user) {
-                res.status(401).send({
-                    success: false
-                });
-            } else {
-                req.logIn(user, function(err) {
-                    if (err) {
-                        return next(err);
-                    }
-                    res.status(200).send({
-                        success: true
-                    });
-                });
-            }
-        })(req, res, next);
-    });
+    app.post('/loginAuth', passport.authenticate(
+        'local', {
+            session: false
+        }), generateToken, respond);
 
-// logs user out
+    // logs user out
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
     });
 
-
-// general authentication method
-    passport.use(new LocalStrategy({
-            usernameField: 'username',
-            passwordField: 'password',
-            passReqToCallback: true
-        },
-    function(req, username, password, done) { // callback with email and password from our form
-        if(adminConfig.admin.username === username && adminConfig.admin.password === password) {
-            return done(null, adminConfig.admin.username);
+    app.post('/routerCheck', function(req, res) {
+        if(!req.user) {
+            res.json('400');
         } else {
-            return done(null, false);
+            res.json('200');
         }
-    }));
+    });
 
-    passport.serializeUser(function(user, done) {
+/*    passport.serializeUser(function(user, done) {
         done(null, user);
     });
 
@@ -64,26 +39,35 @@ module.exports = function(app, connection) {
         done(null, user);
     });
 
-// middleware function used in routes in order to regulate access based on whether or not the user is authenticated
-    return function ensureAuthenticated(req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
+*/
+
+    // general authentication method
+    passport.use(new Strategy(
+    function(username, password, done) { // callback with email and password from our form
+        if(adminConfig.admin.username === username && adminConfig.admin.password === password) {
+            return done(null, adminConfig.admin.username);
         } else {
-            res.redirect('/#/login');
+            return done(null, false);
         }
+    }));
+
+
+    function generateToken(req, res, next) {  
+      req.token = jwt.sign({
+        id: req.user,
+      }, 'server secret', {
+        expiresIn: '1h'
+      });
+      next();
     }
 
-    return function routerAuth(req, res, next) {
-        if (req.isAuthenticated()) {
-            console.log('here');
-            res.type('200');
-        } else {
-            console.log('there');
-            res.type('401');
-        }
+
+    function respond(req, res) { 
+      res.json({
+        user: req.user,
+        token: req.token
+      });
     }
-
-
 
 
 }

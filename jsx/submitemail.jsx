@@ -75,7 +75,7 @@ export class SubmitEmail extends React.Component {
                         <form>
                             <input ref="emailInput" className="inputText" type="text" placeholder="Enter your email here." />
                         </form>
-                        <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Submit</button>
+                        <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started!</button>
                     </div>
                 );
             } else {

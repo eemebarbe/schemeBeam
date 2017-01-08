@@ -4,7 +4,10 @@ var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
 module.exports = function(app, connection) {
 
-var ensureAuthenticated = require('../authentication/auth.js')(app);
+var authentication = require('../authentication/auth.js')(app);
+
+var expressJwt = require('express-jwt');  
+var authenticate = expressJwt({secret : 'server secret'});
 
     //add email address to database, create a verification code, and send verification link to email address
     app.post('/api/v1/newemail', function(req, res) {
@@ -34,7 +37,7 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
                                 "<br><div>If you would like to check on your position in the referral contest, <a href=\"" + req.body.domain + "/#/stats/" + hashCode + "\">click here.</a></div>");
                         var mail = new helper.Mail(from, subject, to, content);
 
-                        var sg = require('sendgrid')(SENDGRID_API_KEY);
+                        var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
                         var request = sg.emptyRequest({
                           method: 'POST',
@@ -111,7 +114,7 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
     });
 
     //gets full list of emails entered
-    app.get('/api/v1/data/', ensureAuthenticated, function(req, res) {
+    app.get('/api/v1/data/', authenticate, function(req, res) {
         connection.query(
             'SELECT emailaddress FROM emails WHERE `verified`=\'true\' ORDER BY referrals DESC, datetime ASC', 
             function(err, rows, fields){   
@@ -156,7 +159,7 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
     });
 
     //get list of contestants within specified range
-    app.get('/api/v1/toprange', ensureAuthenticated, function(req, res){
+    app.get('/api/v1/toprange', authenticate, function(req, res){
         var limit = adminConfig.prizeRange;
         connection.query('SELECT emailaddress FROM emails ORDER BY referrals DESC, datetime ASC LIMIT ?',[limit], function(err, rows, fields){
             if (err) throw err;

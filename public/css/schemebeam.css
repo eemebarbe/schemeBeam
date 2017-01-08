@@ -29,7 +29,7 @@ body {
 	margin: 20px;
 	background-color: #fafafa;
 	padding: 20px;
-	padding-bottom: 40px;
+	padding-bottom: 20px;
 	padding-top: 40px;
 	border: 1px solid #D5DADF;
 	border-radius: 9px;
@@ -40,8 +40,8 @@ body {
 
 .landerPageMessage {
 	border-top: 1px solid #D5DADF;
-	padding-top: 40px;
-	margin-bottom: 40px;
+	padding-top: 20px;
+	margin-bottom: 20px;
 	color: #9fa4b3;
 }
 
@@ -59,6 +59,7 @@ body {
 }
 
 .inputText {
+	font-family: 'Quicksand', sans-serif;
 	height: 40px;
 	font-size: 16px;
 	width: 100%;
@@ -89,6 +90,7 @@ body {
 }
 
 .button {
+	font-family: 'Quicksand', sans-serif;
 	color: white; 
 	border: 1px solid #05abe0;
 	border-radius: 3px;
@@ -100,7 +102,8 @@ body {
 }
 
 .shareCase {
-	margin-top: 40px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .shareCase i {
@@ -123,7 +126,13 @@ body {
 	color: #4875B4;
 }
 
+.referralLink {
+	border: 1px solid #D5DADF;
+	border-radius: 3px;
+	line-height: 40px;
+}
+
 .adminContainer {
 	border-top: 1px solid #D5DADF;
-	padding-top: 40px;
+	padding-top: 20px;
 }

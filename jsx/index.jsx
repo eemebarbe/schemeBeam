@@ -28,13 +28,12 @@ class Lander extends React.Component {
     }
 }
 
-function requireAuth (nextState, replace) {
-    axios.post('/routerLogIn')
+function requireAuth(nextState, replace) {
+    axios.post('/routerCheck')
     .then((response) => {
-        if(response.type !== '200'){
-            replace({
-                pathname: '/login'
-            })
+        console.log(response);
+        if(response.data !== '200'){
+            hashHistory.push('/login');
         }
     });
 }

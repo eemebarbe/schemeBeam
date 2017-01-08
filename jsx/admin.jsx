@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { hashHistory } from 'react-router';
 
 
 export class Admin extends React.Component {
@@ -66,8 +67,16 @@ export class Login extends React.Component {
         };
     }
 
-    logIn(){
-
+    logIn(e){
+        e.preventDefault();
+        const logInData = {
+            username : ReactDOM.findDOMNode(this.refs.usernameInput).value,
+            password : ReactDOM.findDOMNode(this.refs.passwordInput).value
+        }
+        axios.post('/loginAuth', logInData)
+        .then((response) => {
+            console.log(response);
+        })
     }
 
     render() {

@@ -24,11 +24,11 @@ class Stats extends React.Component {
     prizeRange() {
         if( this.state.rank <= settings.prizeRange){
             return (
-                 <div>Congratulations, you're in the top {settings.prizeRange}! Other participants can still push you out of your rank, so keep referring friends to secure your spot!</div>
+                 <div className="secondaryHeader">Congratulations, you're in the top {settings.prizeRange}! Other participants can still push you out of your rank, so keep referring friends to secure your spot!</div>
             )
         } else {
             return (
-            <div>You're not in the top {settings.prizeRange}! Get more referrals to improve your ranking!</div>
+            <div className="secondaryHeader">You're not in the top {settings.prizeRange}! Get more referrals to improve your ranking!</div>
             )
         }
     };
