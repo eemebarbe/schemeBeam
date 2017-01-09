@@ -82,10 +82,11 @@ export class Login extends React.Component {
     render() {
         return(
             <div>
-                <form>
-                    <input ref="usernameInput" className="inputText" type="text" />
-                    <input ref="passwordInput" className="inputText" type="text" />
-                    <button onClick={this.logIn.bind(this)} ref="adminSubmit" className="inputButton">Submit</button>
+            <div className="headerTitle">Log In</div>
+                <form className="logInBox">
+                    <input ref="usernameInput" className="inputText" type="text" placeholder="username"/>
+                    <input ref="passwordInput" className="inputText" type="text" placeholder="password"/>
+                    <button onClick={this.logIn.bind(this)} ref="adminSubmit" className="inputButton button">Submit</button>
                 </form>
             </div>
         )
