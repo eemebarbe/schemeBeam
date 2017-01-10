@@ -5,29 +5,12 @@ import { hashHistory } from 'react-router';
 import rd3 from 'rd3';
 
 export class Pie extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            numberOfVerified : null,
-            numberOfUnverified : null
-        };
-    }
 
-    componentWillMount() {
-        axios.get('/api/v1/countverified/')
-        .then((response) => {
-            const unverified = this.props.totalCollected - response.data[0].count;
-            this.setState({
-                numberOfVerified : response.data[0].count,
-                numberOfUnverified : unverified
-            });
-        });
-    }
 
     render() {
     const PieChart = rd3.PieChart
-    const verifiedPercentage = (this.state.numberOfVerified / this.props.totalCollected)*100;
-    const unverifiedPercentage = (this.state.numberOfUnverified / this.props.totalCollected)*100;
+    const verifiedPercentage = (this.props.numberOfVerified / this.props.totalCollected)*100;
+    const unverifiedPercentage = (this.props.numberOfUnverified / this.props.totalCollected)*100;
     const pieData = [{value: verifiedPercentage}, {value: unverifiedPercentage}];
         return(
             <div className="pieChart">
@@ -51,7 +34,9 @@ export class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            totalCollected : 0
+            totalCollected : 0,
+            numberOfVerified : null,
+            numberOfUnverified : null
         };
     }
 
@@ -60,6 +45,14 @@ export class Admin extends React.Component {
         .then((response) => {
             this.setState({
                 totalCollected : response.data[0].count
+            });
+        });
+        axios.get('/api/v1/countverified/')
+        .then((response) => {
+            const unverified = this.state.totalCollected - response.data[0].count;
+            this.setState({
+                numberOfVerified : response.data[0].count,
+                numberOfUnverified : unverified
             });
         });
     }
@@ -105,17 +98,19 @@ export class Admin extends React.Component {
                     <button className="button leftButton" onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
                     <button className="button" onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>
                 </div>
-                <Pie totalCollected={this.state.totalCollected} />
+                <div className="totalEmails">Total email addresses collected: {this.state.totalCollected}</div>
+                <Pie totalCollected={this.state.totalCollected}
+                    numberOfVerified={this.state.numberOfVerified}
+                    numberOfUnverified={this.state.numberOfUnverified} />
                 <div className="dataContainer">
                     <div className="pieDataLine">
                         <div className="pieDataBox pieDataBoxVerified"></div>
-                        <div className="pieTitle">verified emails</div>
+                        <div className="pieTitle">{this.state.numberOfVerified} verified emails</div>
                     </div>
                     <div className="pieDataLine">
                         <div className="pieDataBox pieDataBoxUnverified"></div>
-                        <div className="pieTitle">unverified emails</div>
+                        <div className="pieTitle">{this.state.numberOfUnverified} unverified emails</div>
                     </div>
-                    <div className="totalEmails">Total email addresses collected: {this.state.totalCollected}</div>
                 </div>
                 <button onClick={this.logOut.bind(this)} className="button">Log Out</button>
                 </div>
