@@ -1,5 +1,6 @@
 var md5 = require('md5');
 var adminConfig = require('../config/adminconfig.js');
+var settingsConfig = require('../config/settingsconfig.js');
 var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
 module.exports = function(app, connection) {
@@ -123,7 +124,6 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
     //get the rank of the contestant
     app.get('/api/v1/getrank/:thisId', function(req, res) {
         var url_Id = req.param('thisId');
-        console.log(url_Id);
             connection.query(
                 'SELECT * FROM (  SELECT emailaddress, referrals, referralcode, @rownum:=@rownum + 1 as row_number FROM emails t1,' +
                 '(SELECT @rownum := 0) t2 ORDER BY referrals DESC, datetime ASC) t1 WHERE `referralcode`=(?)',[url_Id], 
@@ -157,8 +157,8 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
 
     //get list of contestants within specified range
     app.get('/api/v1/toprange', ensureAuthenticated, function(req, res){
-        var limit = adminConfig.prizeRange;
-        connection.query('SELECT emailaddress FROM emails ORDER BY referrals DESC, datetime ASC LIMIT ?',[limit], function(err, rows, fields){
+        var limit = settingsConfig.prizeRange;
+        connection.query('SELECT emailaddress FROM emails WHERE `verified`=\'true\' ORDER BY referrals DESC, datetime ASC LIMIT ?',[limit], function(err, rows, fields){
             if (err) throw err;
             res.json(rows);
        });

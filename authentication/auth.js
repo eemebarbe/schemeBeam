@@ -36,17 +36,16 @@ module.exports = function(app, connection) {
     });
 
 // logs user out
-    app.get('/logout', function(req, res) {
+    app.post('/logout', function(req, res) {
         req.logout();
-        res.redirect('/');
+        res.end();
+
     });
 
     app.post('/routerCheck', function(req, res) {
         if (req.isAuthenticated()) {
-            console.log('here');
             res.json('200');
         } else {
-            console.log('there');
             res.json('401');
         }
     });

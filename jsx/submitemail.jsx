@@ -10,7 +10,9 @@ export class SubmitEmail extends React.Component {
         super(props);
         this.state = {
             hashCode : this.props.routeParams.hashCode,
-            realHash : false
+            realHash : false,
+            showWarning : 'none',
+            warningMessage : null
         };
     }
 
@@ -36,12 +38,18 @@ export class SubmitEmail extends React.Component {
         };
         //if email form is blank when submission button is clicked
         if (!emailData.email) {
-            alert('Please enter your email address!');
+            this.setState({
+                showWarning : 'block',
+                warningMessage : 'Please enter your email address!'
+            });
         //if form is not blank, do a regex check
         } else if (emailData.email !== null || emailData.email !== '') {
             const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (!re.test(emailData.email)) {
-                alert('Not a valid email address!');
+                this.setState({
+                    showWarning : 'block',
+                    warningMessage : 'Not a valid email address!'
+                });
             //if it passes, log new email
             } else {
                 axios.post('api/v1/newemail', emailData)
@@ -52,7 +60,10 @@ export class SubmitEmail extends React.Component {
                         .then((response) => {
                             //in the case that they're not yet verified, do not supply them with their referral code or stats page
                             if(response.data === 402) {
-                                alert("your account isn't verified yet!");
+                                this.setState({
+                                    showWarning : 'block',
+                                    warningMessage : 'Your account isn\'t verified yet!'
+                                });
                             } else {
                                 const redirectHash = response.data[0].referralcode;
                                 hashHistory.push('/stats/' + redirectHash);
@@ -76,6 +87,7 @@ export class SubmitEmail extends React.Component {
                             <input ref="emailInput" className="inputText" type="text" placeholder="Enter your email here." />
                         </form>
                         <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started!</button>
+                        <div className="warningBox" style={{display: this.state.showWarning}}>{this.state.warningMessage}</div>
                     </div>
                 );
             } else {
@@ -93,11 +105,7 @@ export class SubmitEmail extends React.Component {
 }
 
 export class Thanks extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
+
     render() {
         return(
             <div>

@@ -31,7 +31,6 @@ class Lander extends React.Component {
 function requireAuth(nextState, replace) {
     axios.post('/routerCheck')
     .then((response) => {
-        console.log(response);
         if(response.data !== '200'){
             hashHistory.push('/login');
         }

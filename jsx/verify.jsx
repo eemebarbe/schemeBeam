@@ -15,7 +15,6 @@ class Verify extends React.Component {
     componentWillMount() {
         axios.get('api/v1/verifyhash/' + this.state.hashCode)
         .then((response) => {
-            console.log(response.data);
             if(response.data === 200) {
                 this.setState({
                     verified : true

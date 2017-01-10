@@ -12,6 +12,7 @@
     "axios": "^0.15.2",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
+    "d3": "^4.4.1",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-jwt": "^5.1.0",

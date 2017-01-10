@@ -45,6 +45,46 @@ body {
 	color: #9fa4b3;
 }
 
+.warningBox {
+	color: #9fa4b3;
+	font-size: 12px;
+	margin-top: 20px;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 1s; /* Firefox < 16 */
+        -ms-animation: fadein 1s; /* Internet Explorer */
+         -o-animation: fadein 1s; /* Opera < 12.1 */
+            animation: fadein 1s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 .secondaryHeader {
 	color: #9fa4b3;
 	margin-bottom: 20px;
@@ -106,6 +146,11 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 ); /* IE6-9 */
 }
 
+
+.leftButton {
+	margin-right: 5px;
+}
+
 .shareCase {
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -140,4 +185,9 @@ body {
 .adminContainer {
 	border-top: 1px solid #D5DADF;
 	padding-top: 20px;
+}
+
+.dataContainer {
+	margin-bottom: 20px;
+	margin-top: 20px;
 }
