@@ -117,7 +117,40 @@ body {
 
 .pieChart {
 	margin-top: 40px;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
+}
+
+.pieDataBox {
+	width: 20px;
+	height: 20px;
+	border: 1px solid rgba(0,0,0,.25);
+	border-radius: 3px;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.pieDataBoxUnverified {
+	background-color: rgb(107, 174, 214);
+}
+
+.pieDataBoxVerified {
+	background-color: rgb(49, 130, 189);
+}
+
+.pieDataLine {
+	font-size: 12px;
+	margin-bottom: 10px;
+	height: 22px;
+}
+
+.pieTitle {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 22px;
+}
+
+.totalEmails {
+	margin-top: 20px;
 }
 
 .csvButtons {
@@ -157,6 +190,9 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 ); /* IE6-9 */
 }
 
+.button:active {
+	background: #05abe0;
+}
 
 .leftButton {
 	margin-right: 5px;
@@ -199,8 +235,7 @@ body {
 }
 
 .dataContainer {
-	border-top: 1px solid #D5DADF;
-	padding-top: 20px;
+	border-bottom: 1px solid #D5DADF;
+	padding-bottom: 40px;
 	margin-bottom: 20px;
-	margin-top: 20px;
 }

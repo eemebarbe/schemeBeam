@@ -143,6 +143,16 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
             });
     });
 
+    //gets the number of total emails collected that are verified
+    app.get('/api/v1/countverified/', function(req, res){
+            connection.query(
+                'SELECT COUNT(*) AS count FROM emails WHERE `verified`=\'true\'', 
+                function(err, rows, fields){   
+                    if(err) throw err;
+                    res.json(rows);
+            });
+    });
+
     //get the referral code of the contestant from their email address
     app.get('/api/v1/gethashbyemail', function(req, res){
         var url_Id = req.query.email;

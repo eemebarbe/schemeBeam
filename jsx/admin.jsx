@@ -5,10 +5,30 @@ import { hashHistory } from 'react-router';
 import rd3 from 'rd3';
 
 export class Pie extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            numberOfVerified : null,
+            numberOfUnverified : null
+        };
+    }
+
+    componentWillMount() {
+        axios.get('/api/v1/countverified/')
+        .then((response) => {
+            const unverified = this.props.totalCollected - response.data[0].count;
+            this.setState({
+                numberOfVerified : response.data[0].count,
+                numberOfUnverified : unverified
+            });
+        });
+    }
 
     render() {
-    var PieChart = rd3.PieChart
-    var pieData = [{value: 20.0}, {value: 60.0}];
+    const PieChart = rd3.PieChart
+    const verifiedPercentage = (this.state.numberOfVerified / this.props.totalCollected)*100;
+    const unverifiedPercentage = (this.state.numberOfUnverified / this.props.totalCollected)*100;
+    const pieData = [{value: verifiedPercentage}, {value: unverifiedPercentage}];
         return(
             <div className="pieChart">
                 <PieChart
@@ -85,8 +105,18 @@ export class Admin extends React.Component {
                     <button className="button leftButton" onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
                     <button className="button" onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>
                 </div>
-                <Pie />
-                <div className="dataContainer">Total email addresses collected: {this.state.totalCollected}</div>
+                <Pie totalCollected={this.state.totalCollected} />
+                <div className="dataContainer">
+                    <div className="pieDataLine">
+                        <div className="pieDataBox pieDataBoxVerified"></div>
+                        <div className="pieTitle">verified emails</div>
+                    </div>
+                    <div className="pieDataLine">
+                        <div className="pieDataBox pieDataBoxUnverified"></div>
+                        <div className="pieTitle">unverified emails</div>
+                    </div>
+                    <div className="totalEmails">Total email addresses collected: {this.state.totalCollected}</div>
+                </div>
                 <button onClick={this.logOut.bind(this)} className="button">Log Out</button>
                 </div>
             </div>
