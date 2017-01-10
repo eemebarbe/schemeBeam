@@ -78,23 +78,29 @@ export class SubmitEmail extends React.Component {
     }
 
     render() {
-            if(this.state.realHash === true || this.state.hashCode === undefined){
-                var checkHash = (
-                    <div>
-                        <div className="headerTitle">schemeBeam</div>
-                        <div className="landerPageMessage">{settings.landerPageMessage}</div>
-                        <form>
-                            <input ref="emailInput" className="inputText" type="text" placeholder="Enter your email here." />
-                        </form>
-                        <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started!</button>
-                        <div className="warningBox" style={{display: this.state.showWarning}}>{this.state.warningMessage}</div>
-                    </div>
-                );
-            } else {
-                var checkHash = (
-                    <div>Not a valid referral link!</div>
-                );
-            }
+
+        function handleIt(e){
+            e.preventDefault();
+            this.postEmail(e);
+        }
+
+        if(this.state.realHash === true || this.state.hashCode === undefined){
+            var checkHash = (
+                <div>
+                    <div className="headerTitle">{settings.landerPageTitle}</div>
+                    <div className="landerPageMessage">{settings.landerPageMessage}</div>
+                    <form onSubmit={handleIt.bind(this)}>
+                        <input ref="emailInput" className="inputText" type="text" placeholder="Enter your email here." />
+                    </form>
+                    <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started</button>
+                    <div className="warningBox" style={{display: this.state.showWarning}}>{this.state.warningMessage}</div>
+                </div>
+            );
+        } else {
+            var checkHash = (
+                <div>Not a valid referral link!</div>
+            );
+        }
 
         return(
             <div>
