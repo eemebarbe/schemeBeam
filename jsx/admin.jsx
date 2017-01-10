@@ -2,7 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { hashHistory } from 'react-router';
-import d3 from 'd3';
+import rd3 from 'rd3';
+
+export class Pie extends React.Component {
+
+    render() {
+    var PieChart = rd3.PieChart
+    var pieData = [{value: 20.0}, {value: 60.0}];
+        return(
+            <div className="pieChart">
+                <PieChart
+                  data={pieData}
+                  width={220}
+                  height={220} 
+                  radius={110}
+                  showOuterLabels={false}
+                  showInnerLabels={true}
+                  hoverAnimation={false}
+                  innerRadius={0}
+                  sectorBorderColor="white"/>
+            </div>
+        )
+    }
+}
 
 
 export class Admin extends React.Component {
@@ -59,8 +81,11 @@ export class Admin extends React.Component {
             <div>
                 <div className="headerTitle">Admin Panel</div>
                 <div className="adminContainer">
-                <button className="button leftButton" onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
-                <button className="button" onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>
+                <div className="csvButtons">
+                    <button className="button leftButton" onClick={() => this.downloadCsv('fullList')}>Download Full CSV</button>
+                    <button className="button" onClick={() => this.downloadCsv('winnersList')}>Download Winners CSV</button>
+                </div>
+                <Pie />
                 <div className="dataContainer">Total email addresses collected: {this.state.totalCollected}</div>
                 <button onClick={this.logOut.bind(this)} className="button">Log Out</button>
                 </div>
