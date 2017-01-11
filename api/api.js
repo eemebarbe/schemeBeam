@@ -1,7 +1,6 @@
 var md5 = require('md5');
 var adminConfig = require('../config/adminconfig.js');
 var settingsConfig = require('../config/settingsconfig.js');
-var emailTemplate = require('../config/email_template.js');
 var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
 module.exports = function(app, connection) {
@@ -27,17 +26,23 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
                     } else {
                         //send verification email
                         var helper = require('sendgrid').mail;
-                        var from = new helper.Email("schemeBeam@schemeBeam.com");
+                        var from = new helper.Email(settingsConfig.senderAddress);
                         var to = new helper.Email(req.body.email);
-                        var subject = "subject here";
+                        var subject = settingsConfig.subjectLine;
+                        var emailTemplate = require('../config/email_template.js')(
+                            req.body.domain,
+                            hashCode, 
+                            settingsConfig.brandColor, 
+                            settingsConfig.emailImage, 
+                            settingsConfig.preHeader, 
+                            settingsConfig.senderAddress,
+                            settingsConfig.emailHeader,
+                            settingsConfig.footerName,
+                            settingsConfig.footerLocation
+                            );
                         var content = new helper.Content(
-                                "text/html", emailTemplate +
-                                "<h1>Your referral link:</h1> <h2>" + req.body.domain + "/#/" + hashCode + "</h2>" +
-                                "<div><a href=\"" + req.body.domain + "/#/verify/" + hashCode + "\">Click here</a> to activate your referral link and to get started sharing with your contacts! Good luck!</div>" +
-                                "<br><div>If you would like to check on your position in the referral contest, <a href=\"" + req.body.domain + "/#/stats/" + hashCode + "\">click here.</a></div>");
+                                "text/html", emailTemplate);
                         var mail = new helper.Mail(from, subject, to, content);
-
-                        var sg = require('sendgrid')(adminConfig.SENDGRID_API_KEY);
 
                         var request = sg.emptyRequest({
                           method: 'POST',

@@ -9,8 +9,8 @@ export class Pie extends React.Component {
 
     render() {
     const PieChart = rd3.PieChart
-    const verifiedPercentage = (this.props.numberOfVerified / this.props.totalCollected)*100;
-    const unverifiedPercentage = (this.props.numberOfUnverified / this.props.totalCollected)*100;
+    const verifiedPercentage = ((this.props.numberOfVerified / this.props.totalCollected)*100).toFixed(1);
+    const unverifiedPercentage = ((this.props.numberOfUnverified / this.props.totalCollected)*100).toFixed(1);
     const pieData = [{value: verifiedPercentage}, {value: unverifiedPercentage}];
         return(
             <div className="pieChart">

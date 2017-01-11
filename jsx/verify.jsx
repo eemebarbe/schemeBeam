@@ -27,6 +27,8 @@ class Verify extends React.Component {
         if(this.state.verified === true) {
             var referralLink = window.location.hostname + "/#/" + this.state.hashCode;
             var referralLink = referralLink.toString();
+            var referralLinkEncoded = encodeURIComponent(referralLink);
+            console.log(referralLinkEncoded);
             var verification = (
             <div className="headerBox">
                 <div className="headerTitle">You're verified!</div>
@@ -34,8 +36,8 @@ class Verify extends React.Component {
                 <div className="referralLink">{referralLink}</div>
                 <div className="shareCase">
                 <a href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <a href={"https://twitter.com/home?status=" + referralLink}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                <a href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLink + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+                <a href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                <a href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
                 <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
                 </div>
             </div>
