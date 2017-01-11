@@ -2,6 +2,7 @@
 
 Do you want your product to go viral and to build an email list of solid leads to market to directly? Do it for **free** with schemeBeam, the open source referral marketing application! 
 
+
 ## How It Works
 
 1. Decide on a prize to give away. Maybe beta access to your new application for the top 50 referrers, or a free month of your subscription service to the top 10.
@@ -10,7 +11,8 @@ Do you want your product to go viral and to build an email list of solid leads t
 4. Once they confirm their email address, they'll be encouraged to share their referral link on social media and elsewhere. Every person that signs up through their link will increase their standing in the contest. They'll be able to access data about their rank via the stats page.
 5. Once the campaign is finished, you'll have a list of potential customers that will automatically be added to your SendGrid contacts list, in addition to being downloadable as a CSV file via the admin panel.
 
-All neccessary personalizations of the app are centralized into a configuration file, making it quick and easy to set up.
+All neccessary personalizations of the app are centralized into a single configuration file, making it quick and easy to set up.
+
 
 ## Installation and Setup
 
@@ -22,6 +24,7 @@ All neccessary personalizations of the app are centralized into a configuration 
 6. You'll need to create a SendGrid account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone)
 6. Change the admin credentials in adminconfig.js, and customize your app settings in settingsconfig.js
 7. Open localhost in your browser
+
 
 ## License
 
