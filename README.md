@@ -1,6 +1,6 @@
 # schemeBeam
 
-Do you want to make your product go viral and build an email list of solid leads to market to directly? Do it for **free** with schemeBeam, the open source referral marketing application! 
+Do you want your product go viral and to build an email list of solid leads to market to directly? Do it for **free** with schemeBeam, the open source referral marketing application! 
 
 ## How It Works
 
