@@ -40,7 +40,7 @@ export class Admin extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         axios.get('/api/v1/count/')
         .then((response) => {
             this.setState({
