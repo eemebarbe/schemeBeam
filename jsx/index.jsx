@@ -45,7 +45,7 @@ ReactDOM.render(
             <Route path='admin' component={Admin} onEnter={requireAuth} />
             <Route path='login' component={Login} />
             <Route path='stats/:hashCode' component={Stats}></Route>
-            <Route path='referral/:hashCode' component={SubmitEmail}></Route>
+            <Route path=':hashCode' component={SubmitEmail}></Route>
             <Route path='verify/:hashCode' component={Verify}></Route>
 		</Route>
 	</Router>,
