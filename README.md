@@ -1,6 +1,6 @@
 # schemeBeam
 
-#### Do you want your product to go viral *and* build an email list of solid leads to market to directly? Do it for *free* with schemeBeam, the open source referral marketing application! 
+#### Do you want your product to go viral *and* build an email list of solid leads to market to directly? Do it for free with schemeBeam, the open source referral marketing application! 
 
 schemeBeam provides a solution for you to gain hype around your idea. A simple landing page (which you can modify) asks users for their email address. After they verify, they can share their invite link in exchange for the ability to earn a reward. Users win by getting the biggest number of users to sign up (tracked by schemeBeam).
 
@@ -18,7 +18,7 @@ The more users they refer, the higher they move up in the queue, and the more fr
 
 ## Installation and Setup
 
-1. Spin up a MySQL server
+1. Spin up a MySQL server (requires version 5.6.5 or greater)
 2. Create a new database named "schemeBeam"
 3. In the command prompt, enter `mysql -u [your username] -p schemeBeam < schemeBeamDB.sql` to import the database structure
 4. Add your MySQL credentials to the adminconfig.js file
