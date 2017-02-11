@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import * as settings from '../config/settingsconfig.js';
 
@@ -8,7 +7,8 @@ class Stats extends React.Component {
         super(props);
         this.state = {
             hashCode : this.props.routeParams.hashCode,
-            rank : 0
+            rank : 0,
+            referrals : 0
         };
     }
 
@@ -16,7 +16,8 @@ class Stats extends React.Component {
         axios.get('api/v1/getrank/' + this.state.hashCode)
         .then((response) => {
             this.setState({
-                rank : response.data[0].row_number
+                rank : response.data[0].row_number,
+                referrals : response.data[0].referrals
             });
         });
     }
@@ -24,20 +25,30 @@ class Stats extends React.Component {
     prizeRange() {
         if( this.state.rank <= settings.prizeRange){
             return (
-                 <div className="secondaryHeader">Congratulations, you're in the top {settings.prizeRange}! Other participants can still push you out of your rank, so keep referring friends to secure your spot!</div>
+                 <div className="secondaryHeader">Congratulations, you're in the top {settings.prizeRange}, and have a total of <b>{this.state.referrals} referrals!</b> Other participants can still push you out of your rank however, so make sure you keep securing your spot!</div>
             )
         } else {
             return (
-            <div className="secondaryHeader">You're not in the top {settings.prizeRange}! Get more referrals to improve your ranking!</div>
+            <div className="secondaryHeader">Sorry, with {this.state.referrals}, you're not in the top {settings.prizeRange} contestants. Get more referrals to improve your ranking!</div>
             )
         }
     };
 
     render() {
+        var referralLink = window.location.hostname + "/#/" + this.state.hashCode;
+        var referralLink = referralLink.toString();
+        var referralLinkEncoded = encodeURIComponent(referralLink);
         return(
             <div className="headerBox">
                 <div className="headerTitle">Your rank is #{this.state.rank}</div>
                 {this.prizeRange()}
+                <div className="referralLink">{referralLink}</div>
+                <div className="shareCase">
+                    <a href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                    <a href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                    <a href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+                    <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+                </div>
             </div>
         )
     }

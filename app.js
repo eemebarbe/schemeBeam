@@ -1,7 +1,6 @@
 //general dependencies
 var express = require('express');
 var app = express();
-var fs = require('fs');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var adminConfig = require('./config/adminconfig.js');

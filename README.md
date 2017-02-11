@@ -15,17 +15,18 @@ The more users they refer, the higher they move up in the queue, and the more fr
 4. Once they confirm their email address, they'll be encouraged to share their referral link on social media and elsewhere, continuing the cycle. Every person that signs up through their link will increase the referrer's standing in the contest. Data about their rank is accessible via the stats page.
 5. When the campaign is finished, you'll have a list of potential customers that will automatically be added to your SendGrid contacts list, in addition to being downloadable as a CSV file via the admin panel.
 
+![](http://imgur.com/yB3glO2)
 
 ## Installation and Setup
 
 1. Spin up a MySQL server (requires version 5.6.5 or greater)
 2. Create a new database named "schemeBeam"
 3. In the command prompt, enter `mysql -u [your username] -p schemeBeam < schemeBeamDB.sql` to import the database structure
-4. Add your MySQL credentials to the adminconfig.js file
-5. Run `npm install`
-6. Create a [SendGrid](https://www.sendgrid.com) account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone)
-6. Change the admin credentials in adminconfig.js, and customize your app settings in settingsconfig.js. Change the background image in the CSS file to fit your company's branding
-7. Ready to deploy, run app.js
+4. Run `npm install`
+5. Create a [SendGrid](https://www.sendgrid.com) account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone)
+6. Finish changing your credentials in adminconfig.js, and customize your app settings in settingsconfig.js. Apply your changes by running `webpack` on the command line
+7. Change the background image in the CSS file to fit your company's branding
+8. Ready to deploy, run app.js
 
 
 ## License

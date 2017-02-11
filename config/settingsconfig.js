@@ -4,7 +4,7 @@ module.exports = {
 //title on the sign up page. change to the name of the company or something relevant to the campaign
   "landerPageTitle": "schemeBeam",
 //message that will populate on the sign up page
-  "landerPageMessage": "The top 50 referrers will recieve a free copy of our new marketing software a key to our early-access beta test and support forum. " +
+  "landerPageMessage": "The top 50 referrers will recieve a free copy of our new marketing software and a key to our early-access beta test and support forum. " +
   "Enter your email to receive your referral link and start sharing with your friends and colleagues!",
 
 //EMAIL SETTINGS

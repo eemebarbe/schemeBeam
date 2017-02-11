@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import { Link, Router, Route, IndexRoute, hashHistory } from 'react-router';
+import axios from 'axios';
 import * as settings from '../config/settingsconfig.js';
 
 
