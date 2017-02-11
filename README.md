@@ -16,7 +16,9 @@ The more users they refer, the higher they move up in the queue, and the more fr
 5. When the campaign is finished, you'll have a list of potential customers that will automatically be added to your SendGrid contacts list, in addition to being downloadable as a CSV file via the admin panel.
 
 
+
 ![](http://i.imgur.com/yB3glO2.gif)
+
 
 
 ## Installation and Setup
