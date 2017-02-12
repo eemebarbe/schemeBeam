@@ -103,7 +103,14 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
                           body: [{ "email": emailaddress }]
                         });
                         sg.API(addContact, function(error, response) {
-                          // Handle the response here.
+                            var recipient_Id = response.body.persisted_recipients.toString();
+                            var addContactToList = sg.emptyRequest({
+                              method: 'POST',
+                              path: '/v3/contactdb/lists/' + adminConfig.list_Id + '/recipients/' + recipient_Id,
+                            });
+                            sg.API(addContactToList, function(error, response) {
+                                //add response
+                            });
                         });
                         //add a referral point to the contestant that referred the newly verified contestant
                         connection.query('UPDATE emails SET referrals = referrals + 1 WHERE `emailaddress`=(?)',[referredBy], function(err, rows, fields){
