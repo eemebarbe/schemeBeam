@@ -26,7 +26,7 @@ The more users they refer, the higher they move up in the queue, and the more fr
 3. Run `npm install`
 4. Create a [SendGrid](https://www.sendgrid.com) account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone)
 5. Create a list for your collected emails under "Marketing Campaigns" in SendGrid. Add the ID of your list to the adminConfig file (while very useful, this is technically optional. You can download a CSV of your email list in the admin panel)
-6. Finish changing your credentials in adminconfig.js, and customize your app settings in settingsconfig.js.
+6. Finish changing your credentials in adminconfig.js, and customize your app settings in settingsconfig.js. Run `webpack` to finalize changes.
 7. Change the background image in the CSS file to fit your company's branding
 8. Ready to deploy, run app.js
 
