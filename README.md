@@ -21,15 +21,14 @@ The more users they refer, the higher they move up in the queue, and the more fr
 
 ## Installation and Setup
 
-1. Spin up a MySQL server (requires version 5.6.5 or greater)
-2. Create a new database named "schemeBeam"
-3. In the command prompt, enter `mysql -u [your username] -p schemeBeam < schemeBeamDB.sql` to import the database structure
-4. Run `npm install`
-5. Create a [SendGrid](https://www.sendgrid.com) account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone)
-6. Create a list for your collected emails under "Marketing Campaigns" in SendGrid. Add the ID of your list to the adminConfig file (while very useful, this is technically optional. You can download a CSV of your email list in the admin panel)
-7. Finish changing your credentials in adminconfig.js, and customize your app settings in settingsconfig.js.
-8. Change the background image in the CSS file to fit your company's branding
-9. Ready to deploy, run app.js
+1. Spin up a MySQL server (requires version 5.6.5 or greater) and create a new database named "schemeBeam"
+2. In the command prompt, enter `mysql -u [your username] -p schemeBeam < schemeBeamDB.sql` to import the database structure
+3. Run `npm install`
+4. Create a [SendGrid](https://www.sendgrid.com) account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone)
+5. Create a list for your collected emails under "Marketing Campaigns" in SendGrid. Add the ID of your list to the adminConfig file (while very useful, this is technically optional. You can download a CSV of your email list in the admin panel)
+6. Finish changing your credentials in adminconfig.js, and customize your app settings in settingsconfig.js.
+7. Change the background image in the CSS file to fit your company's branding
+8. Ready to deploy, run app.js
 
 
 ## License
