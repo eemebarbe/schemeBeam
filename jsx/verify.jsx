@@ -32,10 +32,10 @@ class Verify extends React.Component {
                 <div className="secondaryHeader">You can now share your referral link!</div>
                 <div className="referralLink">{referralLink}</div>
                 <div className="shareCase">
-                <a href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink + "t="}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <a href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                <a href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
-                <a href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+                <a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                <a target="_blank" href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                <a target="_blank" href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+                <a target="_blank" href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
                 </div>
             </div>
             );          

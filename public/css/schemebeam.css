@@ -91,6 +91,8 @@ body {
 	margin-bottom: 20px;
 }
 
+
+
 .headerTitle {
 	font-size: 48px;
 	line-height: 48px;
@@ -197,6 +199,10 @@ body {
 
 .leftButton {
 	margin-right: 5px;
+}
+
+.resendButton {
+	margin-left: 5px;
 }
 
 .shareCase {

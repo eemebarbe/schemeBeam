@@ -12,6 +12,7 @@ export class SubmitEmail extends React.Component {
             hashCode : this.props.routeParams.hashCode,
             realHash : false,
             showWarning : 'none',
+            showResendButton : false,
             warningMessage : null
         };
     }
@@ -62,7 +63,8 @@ export class SubmitEmail extends React.Component {
                             if(response.data === 402) {
                                 this.setState({
                                     showWarning : 'block',
-                                    warningMessage : 'Your account isn\'t verified yet!'
+                                    warningMessage : 'Your account isn\'t verified yet!',
+                                    showResendButton : true
                                 });
                             } else {
                                 const redirectHash = response.data[0].referralcode;
@@ -75,6 +77,20 @@ export class SubmitEmail extends React.Component {
                 });
             }
         }
+    }
+
+    resendEmail() {
+        const emailData = {
+            email: ReactDOM.findDOMNode(this.refs.emailInput).value,
+            hashCode: this.state.hashCode,
+            domain: window.location.host
+        };
+        axios.post('/api/v1/resendVerificationEmail', emailData)
+        .then((response) => {
+        });
+        this.setState({
+            showResendButton : false
+        });
     }
 
     render() {
@@ -93,7 +109,10 @@ export class SubmitEmail extends React.Component {
                         <input ref="emailInput" className="inputText" type="text" placeholder="Enter your email here." />
                     </form>
                     <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started</button>
-                    <div className="warningBox" style={{display: this.state.showWarning}}>{this.state.warningMessage}</div>
+                    <div className="warningBox" style={{display: this.state.showWarning}}>
+                        {this.state.warningMessage} 
+                        {this.state.showResendButton === true ? <button className="button resendButton" onClick={this.resendEmail.bind(this)}>Resend?</button> : null }
+                    </div>
                 </div>
             );
         } else {

@@ -125,6 +125,43 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
         });
     });
 
+    //resend verification email on request
+    app.post('/api/v1/resendVerificationEmail', function(req, res) {
+        var email = req.body.email;
+        var name = email.substring(0, email.lastIndexOf("@"));
+        var domain = email.substring(email.lastIndexOf("@") +1);
+        var hashCode = md5(name + domain);
+        //send verification email
+        var helper = require('sendgrid').mail;
+        var from = new helper.Email(settingsConfig.senderAddress);
+        var to = new helper.Email(req.body.email);
+        var subject = settingsConfig.subjectLine;
+        var emailTemplate = require('../config/email_template.js')(
+            req.body.domain,
+            hashCode, 
+            settingsConfig.brandColor, 
+            settingsConfig.emailImage, 
+            settingsConfig.preHeader, 
+            settingsConfig.senderAddress,
+            settingsConfig.emailHeader,
+            settingsConfig.footerName,
+            settingsConfig.footerLocation
+            );
+        var content = new helper.Content(
+                "text/html", emailTemplate);
+        var mail = new helper.Mail(from, subject, to, content);
+
+        var request = sg.emptyRequest({
+          method: 'POST',
+          path: '/v3/mail/send',
+          body: mail.toJSON(),
+        });
+
+        sg.API(request, function(error, response) {
+            //response
+        });
+    });
+
     //gets full list of emails entered
     app.get('/api/v1/data/', ensureAuthenticated, function(req, res) {
         connection.query(

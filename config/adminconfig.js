@@ -19,5 +19,6 @@ module.exports = {
   	"username": "admin",
   	"password": "password"
   },
+  //secret for authentication process. change to whatever you'd like.
   "passportSecret": "schemeBeamSecret"
 }
