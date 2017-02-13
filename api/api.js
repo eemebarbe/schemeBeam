@@ -160,6 +160,7 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
         sg.API(request, function(error, response) {
             //response
         });
+        res.end();
     });
 
     //gets full list of emails entered

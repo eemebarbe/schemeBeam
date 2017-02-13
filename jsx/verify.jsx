@@ -1,7 +1,33 @@
 import React from 'react';
 import axios from 'axios';
 
-class Verify extends React.Component {
+
+export class Sharebox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            verified : false
+        };
+    }
+    render(){
+        var referralLink = window.location.hostname + "/#/" + this.props.hashCode;
+        var referralLink = referralLink.toString();
+        var referralLinkEncoded = encodeURIComponent(referralLink);
+        return(
+            <div>
+                <div className="referralLink">{referralLink}</div>
+                <div className="shareCase">
+                    <a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                    <a target="_blank" href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                    <a target="_blank" href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+                    <a target="_blank" href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        )
+    }
+}
+
+export class Verify extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,20 +49,11 @@ class Verify extends React.Component {
 
     render() {
         if(this.state.verified === true) {
-            var referralLink = window.location.hostname + "/#/" + this.state.hashCode;
-            var referralLink = referralLink.toString();
-            var referralLinkEncoded = encodeURIComponent(referralLink);
             var verification = (
             <div className="headerBox">
                 <div className="headerTitle">You're verified!</div>
                 <div className="secondaryHeader">You can now share your referral link!</div>
-                <div className="referralLink">{referralLink}</div>
-                <div className="shareCase">
-                <a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <a target="_blank" href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                <a target="_blank" href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
-                <a target="_blank" href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-                </div>
+                <Sharebox hashCode={this.state.hashCode} />
             </div>
             );          
         } else {
@@ -54,5 +71,3 @@ class Verify extends React.Component {
         )
     }
 }
-
-export default Verify;

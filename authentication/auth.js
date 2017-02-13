@@ -35,7 +35,7 @@ module.exports = function(app, connection) {
         })(req, res, next);
     });
 
-// logs user out
+    // logs user out
     app.post('/logout', function(req, res) {
         req.logout();
         res.end();
@@ -51,7 +51,7 @@ module.exports = function(app, connection) {
     });
 
 
-// general authentication method
+    // general authentication method
     passport.use(new LocalStrategy({
             usernameField: 'username',
             passwordField: 'password',
@@ -73,7 +73,7 @@ module.exports = function(app, connection) {
         done(null, user);
     });
 
-// middleware function used in routes in order to regulate access based on whether or not the user is authenticated
+    // middleware function used in routes in order to regulate access based on whether or not the user is authenticated
     return function ensureAuthenticated(req, res, next) {
         if (req.isAuthenticated()) {
             return next();

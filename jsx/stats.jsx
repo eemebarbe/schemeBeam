@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import * as settings from '../config/settingsconfig.js';
+import { Sharebox } from './verify.jsx';
 
 class Stats extends React.Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class Stats extends React.Component {
     prizeRange() {
         if( this.state.rank <= settings.prizeRange){
             return (
-                 <div className="secondaryHeader">Congratulations, you're in the top {settings.prizeRange}, with a total of <b>{this.state.referrals} referrals!</b> Other participants can still push you out of your spot, so the more referrals the better!</div>
+                 <div className="secondaryHeader">Congratulations, you're in the top {settings.prizeRange}, with a total of <b>{this.state.referrals} referrals!</b> Other participants can still push you out of your spot, so the more referrals you can get the better!</div>
             )
         } else {
             return (
@@ -42,13 +43,7 @@ class Stats extends React.Component {
             <div className="headerBox">
                 <div className="headerTitle">Your rank is #{this.state.rank}</div>
                 {this.prizeRange()}
-                <div className="referralLink">{referralLink}</div>
-                <div className="shareCase">
-                    <a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u=" + referralLink}><i className="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                    <a target="_blank" href={"https://twitter.com/home?status=" + referralLinkEncoded}><i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
-                    <a target="_blank" href={"https://www.linkedin.com/shareArticle?mini=true&url=" + referralLinkEncoded + "&title=&summary=&source="}><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
-                    <a target="_blank" href={"https://plus.google.com/share?url=" + referralLink}><i className="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-                </div>
+                <Sharebox hashCode={this.state.hashCode} />
             </div>
         )
     }

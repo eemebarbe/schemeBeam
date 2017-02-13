@@ -4,7 +4,7 @@ import { Link, Router, Route, IndexRoute, hashHistory } from 'react-router';
 import axios from 'axios';
 
 import Stats from "./stats.jsx";
-import Verify from "./verify.jsx";
+import { Verify } from "./verify.jsx";
 import { Admin, Login } from "./admin.jsx";
 import { SubmitEmail, Thanks } from "./submitemail.jsx";
 

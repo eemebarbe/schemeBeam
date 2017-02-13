@@ -12,7 +12,7 @@ The more users they refer, the higher they move up in the queue, and the more fr
 1. Decide on a reward to give away, and the number of top performers you'll be rewarding it to. Maybe beta access to your new application for the top 50 referrers, or a free month of your subscription service to the top 10.
 2. Let people know about the offer. Link them to your schemeBeam landing page, where they can submit their email to enter the contest.
 3. Once they enter, an email will be sent to them containing their personal referral link. They'll be asked to confirm their email address in order to participate, ensuring that you're receiving real leads for your product or service.
-4. Once they confirm their email address, they'll be encouraged to share their referral link on social media and elsewhere, continuing the cycle. Every person that signs up through their link will increase the referrer's standing in the contest. Data about their rank is accessible via the stats page.
+4. Once they confirm their email address, they'll be encouraged to share their referral link on social media and elsewhere, continuing the cycle. Every person that signs up through their link will increase the referrer's standing in the contest. Data about their rank will be accessible to them via the stats page.
 5. When the campaign is finished, you'll have a list of potential customers that will automatically be added to your SendGrid contacts list, in addition to being downloadable as a CSV file via the admin panel.
 
 <br>
