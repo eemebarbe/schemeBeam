@@ -15,9 +15,9 @@ The more users they refer, the higher they move up in the queue, and the more fr
 4. Once they confirm their email address, they'll be encouraged to share their referral link on social media and elsewhere, continuing the cycle. Every person that signs up through their link will increase the referrer's standing in the contest. Data about their rank will be accessible to them via the stats page.
 5. When the campaign is finished, you'll have a list of potential customers that will automatically be added to your SendGrid contacts list, in addition to being downloadable as a CSV file via the admin panel.
 
-<br>
+
 ![schemeBeam](http://i.imgur.com/yB3glO2.gif)
-<br>
+
 
 ## Installation and Setup
 
