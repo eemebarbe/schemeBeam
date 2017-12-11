@@ -2,8 +2,9 @@
   "name": "schemebeam",
   "version": "1.0.0",
   "description": "Open source viral marketing tool",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jeremy Barbe",
