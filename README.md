@@ -21,22 +21,7 @@ The more users they refer, the higher they move up in the queue, and the more fr
 
 ## Installation and Setup
 
-1. Spin up a MySQL server (requires version 5.6.5 or greater) and create a new database named "schemeBeam".
-
-To install and setup MySQL follow do as follows:
-You can download and install MySQL for Mac from here:(https://dev.mysql.com/doc/refman/5.6/en/osx-installation-pkg.html).
-Note down the password at the end of the installation.
-Open `~/.bash_profile` on your computer and add the following to it:
-```
-alias mysql=/usr/local/mysql/bin/mysql
-alias mysqladmin=/usr/local/mysql/bin/mysqladmin
-```
-Run `mysql -u root -p` and enter the password from the end of the installation.
-Set a new password by running this line:
-`SET PASSWORD FOR 'root'@'localhost' = PASSWORD('mySuperSecretPassword');`
-Exit out of mysql by entering `exit`.
-You can now create the "schemeBeam" database with the following command:
-`mysqladmin -u root create schemeBeam -p`.
+1. Spin up a MySQL server (requires version 5.6.5 or greater) and create a new database named "schemeBeam". See below how to set up MySQL if needed.
 2. In the command prompt, enter `mysql -u [your username] -p schemeBeam < schemeBeamDB.sql` to import the database structure.
 3. Run `npm install`.
 4. Create a [SendGrid](https://www.sendgrid.com) account. The first 12,000 emails sent are absolutely free. Go to the settings tab and click on "API Keys". Create a general API key and paste it into adminConfig.js (remember to use the actual API key and not the API key ID, happens to everyone).
@@ -46,6 +31,31 @@ You can now create the "schemeBeam" database with the following command:
 8. Set `port` in `config/adminConfig.js` to the port of your choice (e.g. 8000).
 9. Ready to deploy, run app.js using: `node app.js`.
 10. Visit `http://localhost:8000` or whatever port you chose and you should see the running app.
+
+## Setting up MySQL
+
+To install and setup MySQL follow do as follows:
+
+Download and install MySQL for Mac from here:(https://dev.mysql.com/doc/refman/5.6/en/osx-installation-pkg.html).
+
+Note down the password at the end of the installation.
+
+Open `~/.bash_profile` on your computer and add the following to it:
+
+```
+alias mysql=/usr/local/mysql/bin/mysql
+alias mysqladmin=/usr/local/mysql/bin/mysqladmin
+```
+
+Run `mysql -u root -p` and enter the password from the end of the installation.
+
+Set a new password by running this line:
+`SET PASSWORD FOR 'root'@'localhost' = PASSWORD('mySuperSecretPassword');`
+
+Exit out of mysql by entering `exit`.
+
+Create the "schemeBeam" database with the following command:
+`mysqladmin -u root create schemeBeam -p`.
 
 ## License
 
