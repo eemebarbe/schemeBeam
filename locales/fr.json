@@ -1,4 +1,15 @@
 {
+  "landerPageMessage": "Merci de ta présence sur cette page. Laisse ton nom et ton adresse email pour recevoir ton personnalisé à partager pour participer à notre concours. A toi de jouer !",
+  "Please enter your email address!": "Merci de renseigner une adresse email !",
+  "Not a valid referral link!": "Ce n'est pas un lien parainnage valide !",
+  "Not a valid email address!": "Ce n'est pas une adresse email valide !",
+  "Your account isn't verified yet!": "Ton compte n'est pas encore vérifié !",
   "Enter your name here.": "Votre nom.",
-  "Enter your email here.": "Votre email."
+  "Enter your email here.": "Votre email.",
+  "Get started": "C'est parti !",
+  "Resend?": "Renvoyer ?",
+  "You're verified!": "Ton compte est vérifié !",
+  "You can now share your referral link!": "Tu peux maintenant partager ton lien de parainnage",
+  "Not a valid referral code!": "Ce n'est pas un code de parainnage valide",
+  "Check your link and try again.": "Vérifie ton lien et essaie de nouveau"
 }

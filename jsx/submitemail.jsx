@@ -42,7 +42,7 @@ export class SubmitEmail extends React.Component {
         if (!emailData.email) {
             this.setState({
                 showWarning : 'block',
-                warningMessage : 'Please enter your email address!'
+                warningMessage : __('Please enter your email address!')
             });
         //if form is not blank, do a regex check
         } else if (emailData.email !== null || emailData.email !== '') {
@@ -50,7 +50,7 @@ export class SubmitEmail extends React.Component {
             if (!re.test(emailData.email)) {
                 this.setState({
                     showWarning : 'block',
-                    warningMessage : 'Not a valid email address!'
+                    warningMessage : __('Not a valid email address!')
                 });
             //if it passes, log new email
             } else {
@@ -64,7 +64,7 @@ export class SubmitEmail extends React.Component {
                             if(response.data === 402) {
                                 this.setState({
                                     showWarning : 'block',
-                                    warningMessage : 'Your account isn\'t verified yet!',
+                                    warningMessage : __('Your account isn\'t verified yet!'),
                                     showResendButton : true
                                 });
                             } else {
@@ -106,21 +106,21 @@ export class SubmitEmail extends React.Component {
             var checkHash = (
                 <div>
                     <div className="headerTitle">{settings.landerPageTitle}</div>
-                    <div className="landerPageMessage">{settings.landerPageMessage}</div>
+                    <div className="landerPageMessage">{__('landerPageMessage')}</div>
                     <form onSubmit={handleIt.bind(this)}>
                         <input ref="nameInput" className="inputText" type="text" placeholder={__('Enter your name here.')} />
                         <input ref="emailInput" className="inputText" type="text" placeholder={__('Enter your email here.')} />
                     </form>
-                    <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started</button>
+                    <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">{__('Get started')}</button>
                     <div className="warningBox" style={{display: this.state.showWarning}}>
                         {this.state.warningMessage} 
-                        {this.state.showResendButton === true ? <button className="button resendButton" onClick={this.resendEmail.bind(this)}>Resend?</button> : null }
+                        {this.state.showResendButton === true ? <button className="button resendButton" onClick={this.resendEmail.bind(this)}>{__('Resend?')}</button> : null }
                     </div>
                 </div>
             );
         } else {
             var checkHash = (
-                <div>Not a valid referral link!</div>
+                <div>{__('Not a valid referral link!')}</div>
             );
         }
 
