@@ -11,5 +11,11 @@
   "You're verified!": "Ton compte est vérifié !",
   "You can now share your referral link!": "Tu peux maintenant partager ton lien de parainnage",
   "Not a valid referral code!": "Ce n'est pas un code de parainnage valide",
-  "Check your link and try again.": "Vérifie ton lien et essaie de nouveau"
+  "Check your link and try again.": "Vérifie ton lien et essaie de nouveau",
+  "Your referral link:": "Ton lien de parainnage :",
+  "email_before": "Avant de pouvoir partager, tu dois d&#39;abord vérifier ton adresse email.<br />Tant que ton adresse n&#39;est pas vérifiée, les clics sur ton lien ne sont pas comptabilisés.<br />Si tu veux vérifier ton classement à n&#39;importe quel moment, tu peux cliquer",
+  "here": "ici",
+  "Good luck!": "Bonne chance !",
+  "Verify%2520Your%2520Email": "Vérifie%2520ton%2520email",
+  "Verify Your Email": "Vérifie ton email"
 }

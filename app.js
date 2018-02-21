@@ -9,6 +9,7 @@ var adminConfig = require('./config/adminconfig.js');
 
 i18n.configure({
   locales: ['en', 'fr'],
+  defaultLocale: 'fr',
   cookie: 'yourcookiename',
   directory: __dirname + '/locales'
 });
