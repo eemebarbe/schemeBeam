@@ -40,6 +40,7 @@ app.use(bodyParser.json());
 //internal app dependencies
 var api = require('./api/api.js')(app, connection);
 var routes = require('./routes/routes.js')(app, connection);
+var tests = require('./routes/tests')(app, connection);
 var auth = require('./authentication/auth.js')(app, connection);
 
 //server initiation
