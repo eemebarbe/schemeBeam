@@ -108,8 +108,8 @@ export class SubmitEmail extends React.Component {
                     <div className="headerTitle">{settings.landerPageTitle}</div>
                     <div className="landerPageMessage">{settings.landerPageMessage}</div>
                     <form onSubmit={handleIt.bind(this)}>
-                        <input ref="nameInput" className="inputText" type="text" placeholder="Votre nom." />
-                        <input ref="emailInput" className="inputText" type="text" placeholder="Votre email." />
+                        <input ref="nameInput" className="inputText" type="text" placeholder={__('Enter your name here.')} />
+                        <input ref="emailInput" className="inputText" type="text" placeholder={__('Enter your email here.')} />
                     </form>
                     <button onClick={this.postEmail.bind(this)} ref="emailSubmit" className="inputButton button">Get started</button>
                     <div className="warningBox" style={{display: this.state.showWarning}}>
