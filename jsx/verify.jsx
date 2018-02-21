@@ -51,16 +51,16 @@ export class Verify extends React.Component {
         if(this.state.verified === true) {
             var verification = (
             <div className="headerBox">
-                <div className="headerTitle">You're verified!</div>
-                <div className="secondaryHeader">You can now share your referral link!</div>
+                <div className="headerTitle">{__('You\'re verified!')}</div>
+                <div className="secondaryHeader">{__('You can now share your referral link!')}</div>
                 <Sharebox hashCode={this.state.hashCode} />
             </div>
             );          
         } else {
             var verification = (
             <div className="headerBox">
-                <div className="headerTitle">Not a valid referral code!</div>
-                <div className="secondaryHeader">Check your link and try again.</div>
+                <div className="headerTitle">{__('Not a valid referral code!')}</div>
+                <div className="secondaryHeader">{__('Check your link and try again.')}</div>
             </div> 
             );
         }

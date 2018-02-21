@@ -12,7 +12,8 @@ module.exports = {
     "host": "localhost",
     "schema": "schemeBeam",
     "username": "root",
-    "password": "my_password"
+    "password": "my_password",
+    "socketPath": "/var/run/mysqld/mysqld.sock"
   },
   //Make absolutely sure you change these values before you start your campaign. Used to log into admin UI and gain access to certain API endpoints.
   "admin": {
