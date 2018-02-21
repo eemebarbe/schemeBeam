@@ -11,16 +11,18 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
     app.post('/api/v1/newemail', function(req, res) {
         // regex on both client and server side for protection in case JS is augmented
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!re.test(req.body.email)) {
+        if (req.body.name == '') {
+            res.json('Votre nom doit être renseigné !');
+        } else if (!re.test(req.body.email)) {
             res.json('Email address is not valid!');
         } else {
             var email = req.body.email;
-            var name = email.substring(0, email.lastIndexOf("@"));
+            var name = req.body.name;
             var domain = email.substring(email.lastIndexOf("@") +1);
-            var hashCode = md5(name + domain);
+            var hashCode = md5(name + email);
             //send verification email
             function sendGrid(referredBy){
-                connection.query('INSERT INTO emails (emailaddress, referralcode, referredby) VALUES (?, ?, ?)', [req.body.email, hashCode, referredBy], function(err, rows, fields) {
+                connection.query('INSERT INTO emails (name, emailaddress, referralcode, referredby) VALUES (?, ?, ?, ?)', [name, req.body.email, hashCode, referredBy], function(err, rows, fields) {
                     if (err) {
                         res.json(401);
                     } else {
@@ -128,9 +130,9 @@ var ensureAuthenticated = require('../authentication/auth.js')(app);
     //resend verification email on request
     app.post('/api/v1/resendVerificationEmail', function(req, res) {
         var email = req.body.email;
-        var name = email.substring(0, email.lastIndexOf("@"));
+        var name = req.body.name;
         var domain = email.substring(email.lastIndexOf("@") +1);
-        var hashCode = md5(name + domain);
+        var hashCode = md5(name + email);
         //send verification email
         var helper = require('sendgrid').mail;
         var from = new helper.Email(settingsConfig.senderAddress);

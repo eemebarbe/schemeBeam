@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `emails`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `emails` (
   `idemails` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
   `emailaddress` varchar(45) DEFAULT NULL,
   `referrals` int(11) DEFAULT '0',
   `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
