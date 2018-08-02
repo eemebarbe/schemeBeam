@@ -153,7 +153,7 @@ export class Login extends React.Component {
             <div className="headerTitle">Log In</div>
                 <form className="logInBox">
                     <input ref="usernameInput" className="inputText" type="text" placeholder="username"/>
-                    <input ref="passwordInput" className="inputText" type="text" placeholder="password"/>
+                    <input ref="passwordInput" className="inputText" type="password" placeholder="password"/>
                     <button onClick={this.logIn.bind(this)} ref="adminSubmit" className="inputButton button">Submit</button>
                     <div className="warningBox" style={{display: this.state.showWarning}}>{this.state.warningMessage}</div>
                 </form>
