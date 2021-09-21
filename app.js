@@ -12,7 +12,8 @@ var connection = mysql.createConnection({
     host: adminConfig.mysql.host,
     user: adminConfig.mysql.username,
     password: adminConfig.mysql.password,
-    database: 'schemeBeam'
+    database: 'schemeBeam',
+    socketPath: adminConfig.mysql.socketPath
 });
 
 connection.connect();
